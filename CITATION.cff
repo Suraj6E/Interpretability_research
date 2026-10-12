@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use this software, question set or results, please cite it as below."
+type: software
+title: "Interpretability Research: A Visual Map of What Activates Inside an LLM"
+abstract: >-
+  An open-source mechanistic interpretability project with interactive
+  visualizations that show which layers, attention heads and MLPs are active,
+  which contribute to a language model's answer, and which are causally
+  important, starting with GPT-2 small and the Pythia model suite.
+authors:
+  - given-names: "Suraj"
+    family-names: "<your family name>"
+repository-code: "https://github.com/Suraj6E/Interpretability_research"
+license: MIT
+version: "0.0.1"
+keywords:
+  - mechanistic interpretability
+  - explainable AI
+  - large language models
+  - transformer
+  - activation patching
+  - visualization

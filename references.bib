@@ -1,0 +1,427 @@
+% references.bib, Interpretability Research
+%
+% The custom field "verified" is ignored by BibTeX/IEEEtran and never printed.
+%   verified = {2026-10-12 ...}  -> existence/title/venue checked online on that date
+%   verified = {no}              -> written from memory; check arXiv / Google Scholar / IEEE Xplore
+%                                   (authors, year, venue, pages) before citing
+% Entries with "and others" have incomplete author lists; complete them from the source.
+
+% ---------- Foundations ----------
+
+@misc{elhage2021framework,
+  title    = {A Mathematical Framework for Transformer Circuits},
+  author   = {Elhage, Nelson and Nanda, Neel and Olsson, Catherine and others},
+  year     = {2021},
+  howpublished = {Transformer Circuits Thread},
+  url      = {https://transformer-circuits.pub/2021/framework/index.html},
+  verified = {no}
+}
+
+@misc{olsson2022induction,
+  title    = {In-context Learning and Induction Heads},
+  author   = {Olsson, Catherine and Elhage, Nelson and Nanda, Neel and others},
+  year     = {2022},
+  howpublished = {Transformer Circuits Thread},
+  url      = {https://transformer-circuits.pub/2022/in-context-learning-and-induction-heads/index.html},
+  verified = {no}
+}
+
+@misc{elhage2022superposition,
+  title    = {Toy Models of Superposition},
+  author   = {Elhage, Nelson and Hume, Tristan and Olsson, Catherine and others},
+  year     = {2022},
+  howpublished = {Transformer Circuits Thread},
+  url      = {https://transformer-circuits.pub/2022/toy_model/index.html},
+  verified = {no}
+}
+
+@inproceedings{geva2021kv,
+  title     = {Transformer Feed-Forward Layers Are Key-Value Memories},
+  author    = {Geva, Mor and Schuster, Roei and Berant, Jonathan and Levy, Omer},
+  booktitle = {Proc. Conf. Empirical Methods in Natural Language Processing (EMNLP)},
+  year      = {2021},
+  verified  = {no}
+}
+
+@misc{nostalgebraist2020logitlens,
+  title    = {interpreting {GPT}: the logit lens},
+  author   = {{nostalgebraist}},
+  year     = {2020},
+  howpublished = {LessWrong blog post},
+  verified = {no}
+}
+
+@article{belrose2023tuned,
+  title    = {Eliciting Latent Predictions from Transformers with the Tuned Lens},
+  author   = {Belrose, Nora and others},
+  journal  = {arXiv preprint arXiv:2303.08112},
+  year     = {2023},
+  verified = {no}
+}
+
+% ---------- Known circuits ----------
+
+@inproceedings{wang2023ioi,
+  title     = {Interpretability in the Wild: a Circuit for Indirect Object Identification in {GPT-2} small},
+  author    = {Wang, Kevin and Variengien, Alexandre and Conmy, Arthur and Shlegeris, Buck and Steinhardt, Jacob},
+  booktitle = {Proc. Int. Conf. Learning Representations (ICLR)},
+  year      = {2023},
+  note      = {arXiv:2211.00593},
+  verified  = {no}
+}
+
+@inproceedings{hanna2023greater,
+  title     = {How does {GPT-2} compute greater-than?: Interpreting mathematical abilities in a pre-trained language model},
+  author    = {Hanna, Michael and Liu, Ollie and Variengien, Alexandre},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+  year      = {2023},
+  note      = {arXiv:2305.00586},
+  verified  = {no}
+}
+
+@inproceedings{meng2022rome,
+  title     = {Locating and Editing Factual Associations in {GPT}},
+  author    = {Meng, Kevin and Bau, David and Andonian, Alex and Belinkov, Yonatan},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+  year      = {2022},
+  note      = {arXiv:2202.05262},
+  verified  = {no}
+}
+
+% ---------- Causal localization methods ----------
+
+@article{heimersheim2024patching,
+  title    = {How to use and interpret activation patching},
+  author   = {Heimersheim, Stefan and Nanda, Neel},
+  journal  = {arXiv preprint arXiv:2404.15255},
+  year     = {2024},
+  verified = {2026-10-12 title and arXiv ID}
+}
+
+@inproceedings{zhang2024bestpractices,
+  title     = {Towards Best Practices of Activation Patching in Language Models: Metrics and Methods},
+  author    = {Zhang, Fred and Nanda, Neel},
+  booktitle = {Proc. Int. Conf. Learning Representations (ICLR)},
+  year      = {2024},
+  note      = {arXiv:2309.16042},
+  verified  = {2026-10-12 title, venue, arXiv ID}
+}
+
+@inproceedings{syed2024attribution,
+  title     = {Attribution Patching Outperforms Automated Circuit Discovery},
+  author    = {Syed, Aaquib and Rager, Can and Conmy, Arthur},
+  booktitle = {Proc. 7th BlackboxNLP Workshop},
+  year      = {2024},
+  note      = {arXiv:2310.10348},
+  verified  = {2026-10-12 title, venue, arXiv ID; authors from memory}
+}
+
+@article{kramar2024atp,
+  title    = {{AtP*}: An efficient and scalable method for localizing {LLM} behaviour to components},
+  author   = {Kram{\'a}r, J{\'a}nos and Lieberum, Tom and Shah, Rohin and Nanda, Neel},
+  journal  = {arXiv preprint arXiv:2403.00745},
+  year     = {2024},
+  verified = {2026-10-12 title and arXiv ID; authors from memory}
+}
+
+@article{zhang2026attribution,
+  title    = {When Attribution Patching Lies: Diagnosis and a Second-Order Correction},
+  author   = {Zhang, Luyang and Wang, Jialu},
+  journal  = {arXiv preprint arXiv:2606.09899},
+  year     = {2026},
+  verified = {2026-10-12 title, authors, arXiv ID (abstract read)}
+}
+
+@article{relp2025,
+  title    = {{RelP}: Faithful and Efficient Circuit Discovery via Relevance Patching},
+  author   = {{TODO: add authors from arXiv:2508.21258}},
+  journal  = {arXiv preprint arXiv:2508.21258},
+  year     = {2025},
+  verified = {2026-10-12 title and arXiv ID only}
+}
+
+@inproceedings{conmy2023acdc,
+  title     = {Towards Automated Circuit Discovery for Mechanistic Interpretability},
+  author    = {Conmy, Arthur and Mavor-Parker, Augustine N. and Lynch, Aengus and Heimersheim, Stefan and Garriga-Alonso, Adri{\`a}},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+  year      = {2023},
+  note      = {arXiv:2304.14997},
+  verified  = {no}
+}
+
+@article{marks2024sparse,
+  title    = {Sparse Feature Circuits: Discovering and Editing Interpretable Causal Graphs in Language Models},
+  author   = {Marks, Samuel and Rager, Can and Michaud, Eric J. and Belinkov, Yonatan and Bau, David and Mueller, Aaron},
+  journal  = {arXiv preprint arXiv:2403.19647},
+  year     = {2024},
+  verified = {no}
+}
+
+@article{hanna2024faith,
+  title    = {Have Faith in Faithfulness: Going Beyond Circuit Overlap When Finding Model Mechanisms},
+  author   = {Hanna, Michael and Pezzelle, Sandro and Belinkov, Yonatan},
+  journal  = {arXiv preprint},
+  year     = {2024},
+  verified = {no}
+}
+
+@article{miller2024faithfulness,
+  title    = {Transformer Circuit Faithfulness Metrics Are Not Robust},
+  author   = {Miller, Joseph and Chughtai, Bilal and Saunders, William},
+  journal  = {arXiv preprint},
+  year     = {2024},
+  verified = {no}
+}
+
+% ---------- Pitfalls ----------
+
+@article{mcgrath2023hydra,
+  title    = {The Hydra Effect: Emergent Self-repair in Language Model Computations},
+  author   = {McGrath, Thomas and Rahtz, Matthew and Kram{\'a}r, J{\'a}nos and Mikulik, Vladimir and Legg, Shane},
+  journal  = {arXiv preprint arXiv:2307.15771},
+  year     = {2023},
+  verified = {2026-10-12 title and arXiv ID; authors from memory}
+}
+
+@inproceedings{makelov2024illusion,
+  title     = {Is This the Subspace You Are Looking for? An Interpretability Illusion for Subspace Activation Patching},
+  author    = {Makelov, Aleksandar and Lange, Georg and Nanda, Neel},
+  booktitle = {Proc. Int. Conf. Learning Representations (ICLR)},
+  year      = {2024},
+  note      = {arXiv:2311.17030},
+  verified  = {2026-10-12 title, venue, arXiv ID}
+}
+
+% ---------- Features, SAEs, attribution graphs ----------
+
+@misc{bricken2023monosemanticity,
+  title    = {Towards Monosemanticity: Decomposing Language Models With Dictionary Learning},
+  author   = {Bricken, Trenton and Templeton, Adly and others},
+  year     = {2023},
+  howpublished = {Transformer Circuits Thread},
+  verified = {no}
+}
+
+@inproceedings{cunningham2023sae,
+  title     = {Sparse Autoencoders Find Highly Interpretable Features in Language Models},
+  author    = {Cunningham, Hoagy and Ewart, Aidan and Riggs, Logan and Huben, Robert and Sharkey, Lee},
+  booktitle = {Proc. Int. Conf. Learning Representations (ICLR)},
+  year      = {2024},
+  note      = {arXiv:2309.08600},
+  verified  = {no}
+}
+
+@misc{templeton2024scaling,
+  title    = {Scaling Monosemanticity: Extracting Interpretable Features from {Claude 3 Sonnet}},
+  author   = {Templeton, Adly and Conerly, Tom and others},
+  year     = {2024},
+  howpublished = {Transformer Circuits Thread},
+  url      = {https://transformer-circuits.pub/2024/scaling-monosemanticity/index.html},
+  verified = {no}
+}
+
+@article{lieberum2024gemmascope,
+  title    = {Gemma Scope: Open Sparse Autoencoders Everywhere All At Once on {Gemma 2}},
+  author   = {Lieberum, Tom and Rajamanoharan, Senthooran and others},
+  journal  = {arXiv preprint arXiv:2408.05147},
+  year     = {2024},
+  verified = {no}
+}
+
+@misc{ameisen2025circuit,
+  title    = {Circuit Tracing: Revealing Computational Graphs in Language Models},
+  author   = {Ameisen, Emmanuel and Lindsey, Jack and others},
+  year     = {2025},
+  howpublished = {Transformer Circuits Thread},
+  verified = {no}
+}
+
+@misc{lindsey2025biology,
+  title    = {On the Biology of a Large Language Model},
+  author   = {Lindsey, Jack and Gurnee, Wes and others},
+  year     = {2025},
+  howpublished = {Transformer Circuits Thread},
+  url      = {https://transformer-circuits.pub/2025/attribution-graphs/biology.html},
+  verified = {no}
+}
+
+% ---------- Visualization systems ----------
+
+@article{yeh2023attentionviz,
+  title    = {{AttentionViz}: A Global View of Transformer Attention},
+  author   = {Yeh, Catherine and Chen, Yida and Wu, Aoyu and Chen, Cynthia and Vi{\'e}gas, Fernanda and Wattenberg, Martin},
+  journal  = {IEEE Trans. Vis. Comput. Graphics (Proc. IEEE VIS 2023)},
+  year     = {2024},
+  note     = {arXiv:2305.03210},
+  verified = {2026-10-12 title, IEEE VIS 2023 full paper, arXiv ID; authors from memory}
+}
+
+@inproceedings{cho2025transformerexplainer,
+  title     = {Transformer Explainer: Interactive Learning of Text-Generative Models},
+  author    = {Cho, Aeree and others},
+  booktitle = {Proc. AAAI Conf. Artificial Intelligence (Demo Track)},
+  year      = {2025},
+  note      = {arXiv:2408.04619},
+  verified  = {2026-10-12 title, AAAI 2025, arXiv ID}
+}
+
+@article{li2025conceptviz,
+  title    = {{ConceptViz}: A Visual Analytics Approach for Exploring Concepts in Large Language Models},
+  author   = {Li, Haoxuan and Wen, Zhen and Jiang, Qiqi and Li, Chenxiao and Wu, Yuwei and Yang, Yuchen and Wang, Yiyao and Huang, Xiuqi and Zhu, Minfeng and Chen, Wei},
+  journal  = {IEEE VIS 2025},
+  year     = {2025},
+  verified = {2026-10-12 title, authors, venue (abstract read); confirm final TVCG citation}
+}
+
+@article{kahng2024llmcomparator,
+  title    = {{LLM Comparator}: Interactive Analysis of Side-by-Side Evaluation of Large Language Models},
+  author   = {Kahng, Minsuk and others},
+  journal  = {IEEE VIS 2024},
+  year     = {2024},
+  verified = {2026-10-12 title and venue; confirm final TVCG citation and authors}
+}
+
+@inproceedings{hoover2020exbert,
+  title     = {{exBERT}: A Visual Analysis Tool to Explore Learned Representations in Transformer Models},
+  author    = {Hoover, Benjamin and Strobelt, Hendrik and Gehrmann, Sebastian},
+  booktitle = {Proc. 58th Annu. Meeting Assoc. Comput. Linguistics: System Demonstrations},
+  year      = {2020},
+  verified  = {no}
+}
+
+@inproceedings{vig2019bertviz,
+  title     = {A Multiscale Visualization of Attention in the Transformer Model},
+  author    = {Vig, Jesse},
+  booktitle = {Proc. 57th Annu. Meeting Assoc. Comput. Linguistics: System Demonstrations},
+  year      = {2019},
+  verified  = {no}
+}
+
+@inproceedings{geva2022lmdebugger,
+  title     = {{LM-Debugger}: An Interactive Tool for Inspection and Intervention in Transformer-Based Language Models},
+  author    = {Geva, Mor and Caciularu, Avi and others},
+  booktitle = {Proc. Conf. Empirical Methods in Natural Language Processing: System Demonstrations},
+  year      = {2022},
+  verified  = {no}
+}
+
+@article{hohman2019visual,
+  title    = {Visual Analytics in Deep Learning: An Interrogative Survey for the Next Frontiers},
+  author   = {Hohman, Fred and Kahng, Minsuk and Pienta, Robert and Chau, Duen Horng},
+  journal  = {IEEE Trans. Vis. Comput. Graphics},
+  year     = {2019},
+  verified = {no}
+}
+
+% ---------- Coverage / testing ----------
+
+@inproceedings{pei2017deepxplore,
+  title     = {{DeepXplore}: Automated Whitebox Testing of Deep Learning Systems},
+  author    = {Pei, Kexin and Cao, Yinzhi and Yang, Junfeng and Jana, Suman},
+  booktitle = {Proc. 26th Symp. Operating Systems Principles (SOSP)},
+  year      = {2017},
+  verified  = {no}
+}
+
+@inproceedings{harelcanada2020neuron,
+  title     = {Is Neuron Coverage a Meaningful Measure for Testing Deep Neural Networks?},
+  author    = {Harel-Canada, Fabrice and Wang, Lingxiao and others},
+  booktitle = {Proc. 28th ACM Joint European Software Engineering Conf. and Symp. Foundations of Software Engineering (ESEC/FSE)},
+  year      = {2020},
+  verified  = {2026-10-12 title and venue; complete author list}
+}
+
+% ---------- Surveys ----------
+
+@article{sharkey2025open,
+  title    = {Open Problems in Mechanistic Interpretability},
+  author   = {Sharkey, Lee and others},
+  journal  = {arXiv preprint arXiv:2501.16496},
+  year     = {2025},
+  verified = {no}
+}
+
+@article{ferrando2024primer,
+  title    = {A Primer on the Inner Workings of Transformer-based Language Models},
+  author   = {Ferrando, Javier and Sarti, Gabriele and Bisazza, Arianna and Costa-juss{\`a}, Marta R.},
+  journal  = {arXiv preprint arXiv:2405.00208},
+  year     = {2024},
+  verified = {no}
+}
+
+@article{bereska2024review,
+  title    = {Mechanistic Interpretability for {AI} Safety: A Review},
+  author   = {Bereska, Leonard and Gavves, Efstratios},
+  journal  = {Transactions on Machine Learning Research},
+  year     = {2024},
+  verified = {no}
+}
+
+% ---------- Models, tools, practice ----------
+
+@misc{radford2019gpt2,
+  title    = {Language Models are Unsupervised Multitask Learners},
+  author   = {Radford, Alec and Wu, Jeffrey and Child, Rewon and Luan, David and Amodei, Dario and Sutskever, Ilya},
+  year     = {2019},
+  howpublished = {OpenAI technical report},
+  verified = {no}
+}
+
+@inproceedings{biderman2023pythia,
+  title     = {Pythia: A Suite for Analyzing Large Language Models Across Training and Scaling},
+  author    = {Biderman, Stella and Schoelkopf, Hailey and others},
+  booktitle = {Proc. Int. Conf. Machine Learning (ICML)},
+  year      = {2023},
+  note      = {arXiv:2304.01373},
+  verified  = {no}
+}
+
+@misc{nanda2022transformerlens,
+  title    = {{TransformerLens}},
+  author   = {Nanda, Neel and Bloom, Joseph},
+  year     = {2022},
+  howpublished = {GitHub repository},
+  url      = {https://github.com/TransformerLensOrg/TransformerLens},
+  verified = {2026-10-12 repository exists; confirm preferred citation in repo README}
+}
+
+@article{fiottokaufman2024nnsight,
+  title    = {{NNsight} and {NDIF}: Democratizing Access to Open-Weight Foundation Model Internals},
+  author   = {Fiotto-Kaufman, Jaden and others},
+  journal  = {arXiv preprint arXiv:2407.14561},
+  year     = {2024},
+  verified = {2026-10-12 title and arXiv ID; complete author list}
+}
+
+@article{kaplan2020scaling,
+  title    = {Scaling Laws for Neural Language Models},
+  author   = {Kaplan, Jared and McCandlish, Sam and others},
+  journal  = {arXiv preprint arXiv:2001.08361},
+  year     = {2020},
+  verified = {no}
+}
+
+@article{gebru2021datasheets,
+  title    = {Datasheets for Datasets},
+  author   = {Gebru, Timnit and others},
+  journal  = {Communications of the ACM},
+  year     = {2021},
+  verified = {no}
+}
+
+@article{pineau2021reproducibility,
+  title    = {Improving Reproducibility in Machine Learning Research (A Report from the {NeurIPS} 2019 Reproducibility Program)},
+  author   = {Pineau, Joelle and others},
+  journal  = {Journal of Machine Learning Research},
+  year     = {2021},
+  verified = {no}
+}
+
+@misc{ieee2024aipolicy,
+  title    = {Author Guidelines for Artificial Intelligence ({AI})-Generated Text},
+  author   = {{IEEE}},
+  howpublished = {IEEE Open author guidelines},
+  url      = {https://open.ieee.org/author-guidelines-for-artificial-intelligence-ai-generated-text/},
+  note     = {Accessed 2026-10-12},
+  verified = {2026-10-12 page read}
+}
