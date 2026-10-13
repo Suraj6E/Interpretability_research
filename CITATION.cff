@@ -9,7 +9,7 @@ abstract: >-
   important, starting with GPT-2 small and the Pythia model suite.
 authors:
   - given-names: "Suraj"
-    family-names: "<your family name>"
+    family-names: "Neupane"
 repository-code: "https://github.com/Suraj6E/Interpretability_research"
 license: MIT
 version: "0.0.1"
