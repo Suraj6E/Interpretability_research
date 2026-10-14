@@ -82,22 +82,29 @@ Pythia is used for RQ4 because every size was trained on the same data in the sa
 
 ## 6. Architecture
 
+One Python package does all model work; one viewer draws everything. The viewer has two modes that share the same JSON format.
+
 ```
-questions/*.json
-      │
-      ▼
-interp/run.py      load model (TransformerLens), run clean + twin, cache activations
-      │
-      ▼
-interp/metrics.py  activation strength, DLA, denoising recovery, noising damage
-      │
-      ▼
-results/<model>/<question_id>.json
-      │
-      ▼
-viewer/index.html  static HTML + JavaScript, reads JSON, no server needed
-                   (can be hosted free on GitHub Pages)
+questions/*.json   configs/*.yaml
+        │                │
+        ▼                ▼
+interp/  (Python + TransformerLens; the only code that runs the model)
+  model.py     load a model at a pinned revision
+  metrics.py   activation strength, DLA, denoising recovery, noising damage
+  run.py       BATCH:  python -m interp.run --config configs/<exp>.yaml
+  serve.py     LIVE:   python -m interp.serve   (local server for the viewer)
+        │                         │
+        ▼                         ▼
+results/<model>/<id>.json    same JSON, sent over HTTP
+        │                         │
+        └────────────┬────────────┘
+                     ▼
+viewer/  (Svelte + D3, built into static files)
+  static mode: GitHub Pages; loads saved results ("Load example" or drag-and-drop)
+  live mode:   served by interp/serve.py; maps redraw when the prompt changes
 ```
+
+Live mode keeps a single implementation of the model, so numbers in the viewer, the results files and the paper all come from the same code.
 
 **Result format (one question)**
 
@@ -130,7 +137,9 @@ viewer/index.html  static HTML + JavaScript, reads JSON, no server needed
 **Design rules**
 - Use a colorblind-safe palette. DLA and patching use a diverging scale (negative / zero / positive); activation uses a single-hue scale.
 - Every cell shows its exact value and component name on hover.
-- No server and no build step: one HTML page that opens directly in a browser.
+- The public site needs no server: the built viewer is plain static files on GitHub Pages showing saved results. Typing new prompts needs the local server (`python -m interp.serve`).
+- When the prompt changes, cells animate to their new values, so the eye can follow what changed.
+- Clicking any cell opens a details panel for that component. Panels are added as needs become clear; first candidates: attention pattern, the output tokens it pushes up or down, its scores and ranks in every view, per-position activation, and the logit lens.
 - Every view has a short "how to read this" note beside it.
 
 ## 8. Phases and milestones
@@ -187,10 +196,19 @@ Which model runs on which hardware in each phase: `docs/COMPUTE.md` §7.
 | 2026-10-12 (logged 2026-10-14) | Top-k uses k = 5% of components, rounded up | A share instead of a fixed count, so models with different numbers of components can be compared (`docs/RESEARCH_PROTOCOL.md` §2.4) |
 | 2026-10-12 (logged 2026-10-14) | Drop questions with LD_clean − LD_twin < 1.0 | Recovery and damage ratios become unstable when the denominator is small (`docs/RESEARCH_PROTOCOL.md` §3) |
 | 2026-10-14 | Add V6, a disagreement view (three views side by side, disagreements outlined) | It is the core of contribution C1, and no planned view showed it |
+| 2026-10-14 | Code as Python scripts only; no notebooks for the pipeline | A real project is easier to manage and track; notebooks crash and get hard to follow; effort should go to the visualizations |
+| 2026-10-14 | Viewer gets data by drag-and-drop (or file picker) of result JSON | Works when the page is opened by double-click, with no server and no export step |
+| 2026-10-14 | Dependencies: pip + venv, `pyproject.toml` plus an exact-pinned `requirements.txt` | No new tools; Colab installs the same way; matches `docs/REPRODUCIBILITY.md` |
+| 2026-10-14 | Viewer has two modes: **live** (a local Python server runs the model and the maps redraw as the prompt changes) and **static** (GitHub Pages, saved results). Replaces "Static HTML viewer" (2026-10-12) | The visualization must change when the input changes, which needs the model to run. A server keeps one model implementation (viewer numbers = paper numbers), makes patching easy, and scales to bigger models; running the model in the browser would not |
+| 2026-10-14 | Frontend: Svelte + D3, with a build step (Vite). Replaces "no build step" | Live input and linked panels need automatic redraws; same stack as Transformer Explainer; the built output still hosts free on GitHub Pages. Drag-and-drop stays for loading saved results; opening the page by double-click is no longer a goal |
+| 2026-10-14 | Code layout: shared `interp/` package; each step is one command (`python -m interp.<step> --config ...`) | Each piece is written once and tested; the live server reuses it; matches `docs/REPRODUCIBILITY.md` §6 |
+| 2026-10-14 | Colab: one tiny launcher notebook with no logic (download, install, run) | Keeps goal G4 without notebook-based development |
+| 2026-10-14 | Environment: Python 3.13, torch 2.14.1 (CUDA 13.0 build locally), TransformerLens 4.2.0 | Latest versions that support this machine (RTX 4070 Laptop, 8 GB); exact pins live in `requirements.txt` |
+| 2026-10-14 | Load models as TransformerLens `TransformerBridge` with compatibility mode and default weight processing (fold LayerNorm, center writing weights and unembedding, fold value biases); recorded in every result's `meta.processing` | TransformerLens 4.0 (2026-09-21) removed `HookedTransformer`. Centering changes component output norms (it removes each output's mean, which the next LayerNorm removes anyway), so the setting must be fixed and reported |
 | 2026-10-14 | Pythia is the size suite for the scale study (RQ4), not the final model | Same data and training order at every size, so size is the main thing that changes; the final larger model is still open (§13) |
 
 ## 13. Open questions
 
-- Colab notebook first, or a local Python package first?
+- ~~Colab notebook first, or a local Python package first?~~ Decided 2026-10-14: scripts only (§12).
 - Which larger open model(s) are the final target after Pythia? (Phase 5 candidates: Gemma-2-2b, or another open model with pretrained sparse autoencoders.)
 - Keep the repository name `Interpretability_research`, or switch to hyphens (see the README notes)?

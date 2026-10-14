@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "interp"
+version = "0.0.1"
+description = "Activation, contribution and causal maps of LLM internals"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+# Loose ranges here; exact versions for reproducing results are in requirements.txt.
+dependencies = [
+  "torch>=2.6",
+  "transformer-lens>=4.2,<5",
+  "fastapi>=0.110",
+  "uvicorn>=0.30",
+  "pyyaml>=6",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "httpx>=0.27"]
+
+[tool.setuptools]
+packages = ["interp"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

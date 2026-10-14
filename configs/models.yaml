@@ -1,0 +1,7 @@
+# Every model the project uses, pinned to an exact Hugging Face commit (docs/REPRODUCIBILITY.md §3).
+# Experiment configs and the live server refer to models by the key on the left.
+
+gpt2-small:
+  hf_repo: openai-community/gpt2
+  revision: 607a30d783dfa663caf39e06633721c8d4cfcd7e  # checked 2026-10-14
+  dtype: float32

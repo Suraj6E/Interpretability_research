@@ -7,7 +7,7 @@ An open-source mechanistic interpretability project with interactive visualizati
 ![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)
 ![Status: early stage](https://img.shields.io/badge/status-early%20stage-orange.svg)
 
-> **Status: early stage (planning).** This repository is just getting started. Sections marked 🚧 are planned, not finished. Nothing here is a research result yet. Star or watch the repo to follow along as the maps get built.
+> **Status: early stage.** A live activation map for GPT-2 small works: type a prompt and the map updates. The contribution and causal maps are not built yet. Sections marked 🚧 are planned, not finished. Nothing here is a research result yet. Star or watch the repo to follow along as the maps get built.
 
 ---
 
@@ -90,38 +90,50 @@ Skills with published answers act as a **sanity check**. If our maps don't find 
 ## How it works
 
 ```
-questions/*.json  →  run model (TransformerLens)  →  record activations
-                  →  compute 3 maps               →  results/*.json
-                  →  interactive viewer (HTML/JS, no server needed)
+LIVE:   you type a prompt  →  local Python server runs the model (TransformerLens)  →  map redraws
+BATCH:  questions/*.json   →  python -m interp.run                                  →  results/*.json
+                                                        the same viewer can open these saved files
 ```
 
 ## Quickstart
 
-🚧 **Not working yet.** This shows the planned usage.
+Tested on Windows with Python 3.13 and an NVIDIA GPU. Only the activation map works so far.
 
 ```bash
 git clone https://github.com/Suraj6E/Interpretability_research.git
 cd Interpretability_research
+python -m venv .venv
+.venv\Scripts\activate          # macOS/Linux: source .venv/bin/activate
+
+# NVIDIA GPU only: install the CUDA build of PyTorch first (skip this line for CPU)
+pip install torch==2.14.1 --index-url https://download.pytorch.org/whl/cu130
 pip install -r requirements.txt
-python -m interp.run --model gpt2-small --questions questions/skills_v1.json
+pip install -e . --no-deps
+
+# Build the viewer once (needs Node.js)
+cd viewer && npm install && npm run build && cd ..
+
+# Live mode: open http://127.0.0.1:8000 and type a prompt
+python -m interp.serve
+
+# Batch mode: run a question file and save results
+python -m interp.run --config configs/smoke_gpt2.yaml
 ```
 
-Then open `viewer/index.html` in a browser. A Google Colab notebook (free GPU, nothing to install) is also planned.
+No GPU? A [Colab launcher](notebooks/colab_launcher.ipynb) runs batch mode on a free Colab GPU.
 
 ## Repository structure
 
-🚧 Planned layout:
-
 ```
 Interpretability_research/
-├── README.md
-├── planning.md
-├── questions/        # question sets with twins (JSON)
-├── interp/           # model loading, recording, metrics
-├── notebooks/        # Colab notebooks
-├── results/          # output JSON per question
-├── viewer/           # interactive model map (HTML/JS)
-└── docs/images/      # screenshots
+├── planning.md       # vision, phases, decisions log
+├── configs/          # models.yaml (pinned model versions) and one YAML per experiment
+├── questions/        # question sets with twins (JSON); only a 2-question smoke test so far
+├── interp/           # Python package: model.py, metrics.py, run.py (batch), serve.py (live)
+├── tests/            # checks that hooks and metrics measure what they claim
+├── viewer/           # interactive model map (Svelte + D3)
+├── notebooks/        # Colab launcher (no logic; runs the commands above)
+└── results/          # 🚧 saved result JSON per model and question
 ```
 
 ## How to read the maps (honest caveats)

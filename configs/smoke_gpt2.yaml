@@ -1,0 +1,6 @@
+# Smoke test: checks that the pipeline runs end to end. Not a research experiment.
+# Run with: python -m interp.run --config configs/smoke_gpt2.yaml
+
+model: gpt2-small            # key in configs/models.yaml (pinned revision)
+questions: questions/smoke_v0.json
+output_dir: results/_smoke   # git-ignored

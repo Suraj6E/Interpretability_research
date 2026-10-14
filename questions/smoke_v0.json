@@ -1,0 +1,24 @@
+{
+  "version": "smoke-v0",
+  "note": "Two hand-written examples to test the pipeline. Not the research question set (see docs/DATASHEET.md).",
+  "questions": [
+    {
+      "id": "smoke_ioi_001",
+      "skill": "indirect_object",
+      "clean": "When Mary and John went to the store, John gave a drink to",
+      "twin": "When Mary and John went to the store, Mary gave a drink to",
+      "correct": " Mary",
+      "wrong": " John",
+      "reference": "Wang et al. 2023"
+    },
+    {
+      "id": "smoke_fact_001",
+      "skill": "fact_recall",
+      "clean": "The Eiffel Tower is in the city of",
+      "twin": "The Colosseum is in the city of",
+      "correct": " Paris",
+      "wrong": " Rome",
+      "reference": "Meng et al. 2022"
+    }
+  ]
+}

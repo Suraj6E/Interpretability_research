@@ -1,2 +1,16 @@
 /docs
 /claude.md
+
+# Python
+.venv/
+__pycache__/
+*.egg-info/
+.pytest_cache/
+
+# Viewer
+viewer/node_modules/
+viewer/dist/
+
+# Local only: smoke-test output and personal experiments (never used for paper numbers)
+results/_smoke/
+scratch/
