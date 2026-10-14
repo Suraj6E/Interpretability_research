@@ -62,7 +62,7 @@ Only the causal view tells you what the model actually *uses*. The other two are
 |---|---|---|
 | **1. Activation map** | Output size (norm) of each head and MLP | 1 forward pass |
 | **2. Contribution map** | Direct logit attribution: how much each part adds to the correct answer versus a wrong one | 1 forward pass |
-| **3. Causal map** | Activation patching: copy one part's output from a "clean" question into its "twin" and measure how much of the answer comes back | Many forward passes |
+| **3. Causal map** | Activation patching in both directions: copy one part's output from a "clean" question into its "twin" and measure how much of the answer comes back, and copy it from the twin into the clean question and measure how much of the answer breaks | Many forward passes |
 
 Extra views (planned):
 
@@ -70,6 +70,7 @@ Extra views (planned):
 - **Clean vs. twin diff:** what changes inside the model when one word in the question changes.
 - **Skill fingerprints:** side-by-side maps showing which parts are shared across skills and which are skill-specific.
 - **Activation vs. causal scatter:** does "lit up" predict "necessary"?
+- **Disagreement view:** the three maps side by side, with the parts where they disagree outlined.
 
 ## The question set
 
@@ -78,7 +79,7 @@ Questions are grouped by **skill**. Every question has a **twin**: the same sent
 | Skill | Example question | Twin | Published reference to check against |
 |---|---|---|---|
 | Copying (induction) | Random tokens, repeated twice | Not repeated | Olsson et al. 2022 |
-| Indirect object (IOI) | "When Mary and John went to the store, John gave a drink to" → **Mary** | Names swapped | Wang et al. 2022 |
+| Indirect object (IOI) | "When Mary and John went to the store, John gave a drink to" → **Mary** | Names swapped | Wang et al. 2023 |
 | Greater-than | "The war lasted from 1732 to 17" → a number **> 32** | "…from 1701 to 17" | Hanna et al. 2023 |
 | Fact recall | "The Eiffel Tower is in the city of" → **Paris** | "The Colosseum is in the city of" → Rome | Meng et al. 2022 (ROME) |
 | Grammar agreement | "The keys to the cabinet" → **are** | "The key to the cabinets" → is | — |
@@ -114,7 +115,7 @@ Then open `viewer/index.html` in a browser. A Google Colab notebook (free GPU, n
 ```
 Interpretability_research/
 ├── README.md
-├── PLANNING.md
+├── planning.md
 ├── questions/        # question sets with twins (JSON)
 ├── interp/           # model loading, recording, metrics
 ├── notebooks/        # Colab notebooks
@@ -133,14 +134,14 @@ Interpretability_research/
 
 ## Roadmap
 
-Full details are in [PLANNING.md](PLANNING.md).
+Full details are in [planning.md](planning.md).
 
 - [x] Project plan and question-set design
 - [ ] Phase 1: Activation map for GPT-2 small
 - [ ] Phase 2: Contribution map and attention viewer
 - [ ] Phase 3: Causal map, checked against known circuits
-- [ ] Phase 4: Skill fingerprints and an "activation vs. causal" study
-- [ ] Phase 5: Larger models (Gemma-2-2b), sparse-autoencoder features, attribution graphs
+- [ ] Phase 4: Skill fingerprints, the disagreement view, an "activation vs. causal" study, and a model-size comparison (Pythia suite)
+- [ ] Phase 5: Larger models beyond Pythia (e.g., Gemma-2-2b), sparse-autoencoder features, attribution graphs
 
 ## FAQ
 
@@ -163,7 +164,7 @@ This project is built on top of those excellent tools. Its focus is a beginner-f
 - [circuit-tracer](https://github.com/safety-research/circuit-tracer): an open-source library for attribution graphs
 - [ARENA](https://www.arena.education): a free mechanistic interpretability curriculum
 - Olsson et al. (2022), [In-context Learning and Induction Heads](https://transformer-circuits.pub/2022/in-context-learning-and-induction-heads/index.html)
-- Wang et al. (2022), [Interpretability in the Wild: a Circuit for Indirect Object Identification in GPT-2 small](https://arxiv.org/abs/2211.00593)
+- Wang et al. (2023), [Interpretability in the Wild: a Circuit for Indirect Object Identification in GPT-2 small](https://arxiv.org/abs/2211.00593)
 - Hanna et al. (2023), [How does GPT-2 compute greater-than?](https://arxiv.org/abs/2305.00586)
 - Meng et al. (2022), [Locating and Editing Factual Associations in GPT](https://arxiv.org/abs/2202.05262)
 - Heimersheim & Nanda (2024), [How to use and interpret activation patching](https://arxiv.org/abs/2404.15255)
@@ -186,7 +187,7 @@ Please open an issue first to discuss larger changes.
 
 ```bibtex
 @software{interpretability_research_2026,
-  author = {Suraj},
+  author = {Neupane, Suraj},
   title  = {Interpretability Research: A Visual Map of What Activates Inside an LLM},
   year   = {2026},
   url    = {https://github.com/Suraj6E/Interpretability_research}
