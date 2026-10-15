@@ -1,0 +1,195 @@
+# Question set v0: templates, word lists and counts (docs/DATASHEET.md).
+# Generate with: python -m interp.questions --config configs/questions_v0.yaml
+# Generation does not use any model. Each model later keeps only the questions that pass
+# the inclusion rules (docs/RESEARCH_PROTOCOL.md §3); see results/<model>/filter_report.json.
+
+version: v0
+seed: 20261015
+output: questions/skills_v0.json
+
+skills:
+
+  # Copying (induction): a list of random words, then its start repeated. The model should
+  # continue the repeat. Twin: the word after the repeated part is different in the first
+  # occurrence, so the answer changes. In the style of Olsson et al. 2022, but with common
+  # words instead of random tokens, so the text survives tokenization.
+  induction:
+    count: 60
+    length: 10        # words in the first occurrence
+    min_prefix: 2     # words repeated before the answer (>= 2 keeps the repeated tokens identical)
+    max_prefix: 6
+    reference: Olsson et al. 2022
+    words: [apple, river, stone, chair, cloud, garden, horse, letter, market, ocean, pencil,
+            rabbit, silver, table, window, basket, candle, doctor, engine, forest, guitar,
+            island, jacket, lemon, mirror, orange, pepper, queen, rocket, tiger, valley, wagon,
+            anchor, bridge, castle, dragon, feather, hammer, ladder, magnet, planet, ribbon,
+            shadow, temple, tunnel, wallet, bottle, button, carpet, desert, finger, helmet,
+            coffee, monkey, paper, summer, winter, butter, cotton, pocket]
+
+  # Indirect object identification: in the style of Wang et al. 2023 (wording is ours).
+  # {N1} and {N2} are introduced; {S} (one of them) then gives something "to" the other.
+  # Clean: S is the second name, answer = the other name. Twin: S is swapped, answer flips.
+  indirect_object:
+    count: 160        # raised from 80 after a first GPT-2 run kept only 27 (names dropped by rule 1)
+    reference: Wang et al. 2023
+    templates:
+      - {id: ioi_t1, text: "When {N1} and {N2} went to the {place}, {S} gave a {object} to"}
+      - {id: ioi_t2, text: "After {N1} and {N2} went to the {place}, {S} gave a {object} to"}
+      - {id: ioi_t3, text: "While {N1} and {N2} were working at the {place}, {S} gave a {object} to"}
+      - {id: ioi_t4, text: "Then, {N1} and {N2} had a long argument at the {place}. Afterwards, {S} said to"}
+      - {id: ioi_t5, text: "{N1} and {N2} found a {object} at the {place}. {S} gave it to"}
+    # Mixed genders and cultures. Names that are not single tokens for a model's tokenizer are
+    # dropped by rule 1 for that model; the datasheet reports which.
+    names: [Mary, John, Alice, Bob, Sarah, David, Emma, James, Anna, Michael, Laura, Daniel,
+            Maria, Carlos, Fatima, Ahmed, Priya, Rahul, Mei, Wei, Yuki, Hiro, Aisha, Omar,
+            Sofia, Luca, Nina, Ivan, Olga, Kofi, Amara, Raj, Sita, Ram, Hari, Gita, Lisa, Mark,
+            Kate, Tom]
+    places: [store, park, school, garden, station, hospital, restaurant, office, beach, library]
+    objects: [drink, book, ring, bone, kiss, basket, computer, snack, necklace, letter]
+
+  # Greater-than: Hanna et al. 2023. Answer = any two-digit year greater than the start year.
+  # Twin: start year "01" (Hanna et al.'s corruption). Metric: probability difference.
+  greater_than:
+    count: 60
+    century: "17"
+    min_year: 2
+    max_year: 98
+    reference: Hanna et al. 2023
+    templates:
+      - {id: gt_t1, text: "The {noun} lasted from the year {start} to the year {century}"}
+    nouns: [war, expedition, project, voyage, siege, campaign, journey, construction,
+            occupation, rebellion, drought, famine]
+
+  # Fact recall: entity -> city. Twin: another entity with a different answer.
+  # Each clean prompt gets several twin candidates; a model keeps the first one that passes
+  # all rules (one question per clean prompt), so twins can match in token length.
+  fact_recall:
+    twins_per_prompt: 12   # raised from 4 (with 45 more capitals) after a first GPT-2 run kept 16
+    reference: Meng et al. 2022
+    groups:
+      landmarks:
+        templates:
+          - {id: fact_t1, text: "The {subject} is in the city of"}
+          - {id: fact_t2, text: "The {subject} is located in the city of"}
+        facts:
+          Eiffel Tower: Paris
+          Louvre: Paris
+          Colosseum: Rome
+          Trevi Fountain: Rome
+          Big Ben: London
+          Tower Bridge: London
+          Brandenburg Gate: Berlin
+          Sagrada Familia: Barcelona
+          Acropolis: Athens
+          Parthenon: Athens
+          Kremlin: Moscow
+          Forbidden City: Beijing
+          Space Needle: Seattle
+          Hagia Sophia: Istanbul
+          Blue Mosque: Istanbul
+          Burj Khalifa: Dubai
+          Sydney Opera House: Sydney
+          CN Tower: Toronto
+          Prado Museum: Madrid
+          Rijksmuseum: Amsterdam
+          Alhambra: Granada
+          Gateway of India: Mumbai
+          Taj Mahal: Agra
+          Pashupatinath Temple: Kathmandu
+          Charles Bridge: Prague
+          Atomium: Brussels
+      capitals:
+        templates:
+          - {id: fact_t3, text: "The capital of {subject} is the city of"}
+        facts:
+          France: Paris
+          Italy: Rome
+          Germany: Berlin
+          Spain: Madrid
+          Japan: Tokyo
+          China: Beijing
+          Russia: Moscow
+          Egypt: Cairo
+          Greece: Athens
+          Portugal: Lisbon
+          Austria: Vienna
+          Ireland: Dublin
+          Poland: Warsaw
+          Hungary: Budapest
+          Norway: Oslo
+          Sweden: Stockholm
+          Denmark: Copenhagen
+          Finland: Helsinki
+          Kenya: Nairobi
+          Peru: Lima
+          Cuba: Havana
+          Thailand: Bangkok
+          Nepal: Kathmandu
+          Iran: Tehran
+          Turkey: Ankara
+          Canada: Ottawa
+          Australia: Canberra
+          Belgium: Brussels
+          Indonesia: Jakarta
+          Vietnam: Hanoi
+          Netherlands: Amsterdam
+          Switzerland: Bern
+          Czech Republic: Prague
+          Slovakia: Bratislava
+          Romania: Bucharest
+          Bulgaria: Sofia
+          Serbia: Belgrade
+          Croatia: Zagreb
+          Iceland: Reykjavik
+          Estonia: Tallinn
+          Latvia: Riga
+          Lithuania: Vilnius
+          Scotland: Edinburgh
+          Wales: Cardiff
+          England: London
+          Morocco: Rabat
+          Algeria: Algiers
+          Tunisia: Tunis
+          Libya: Tripoli
+          Sudan: Khartoum
+          Ghana: Accra
+          Nigeria: Abuja
+          Senegal: Dakar
+          Uganda: Kampala
+          Zimbabwe: Harare
+          Iraq: Baghdad
+          Syria: Damascus
+          Lebanon: Beirut
+          Jordan: Amman
+          Saudi Arabia: Riyadh
+          Qatar: Doha
+          Afghanistan: Kabul
+          Pakistan: Islamabad
+          Bangladesh: Dhaka
+          Philippines: Manila
+          South Korea: Seoul
+          North Korea: Pyongyang
+          Mongolia: Ulaanbaatar
+          Jamaica: Kingston
+          Ecuador: Quito
+          Uruguay: Montevideo
+          Chile: Santiago
+          Colombia: Bogota
+          Venezuela: Caracas
+          New Zealand: Wellington
+
+  # Subject-verb agreement across an intervening noun. Clean: subject and the intervening
+  # noun differ in number. Twin: only the subject's number changes, so the verb flips.
+  # Template prefixes were chosen in a pilot on GPT-2 small (2026-10-15): with
+  # "I think that the ..." the verb was the top guess 92% of the time, vs 41% for "The ...".
+  agreement:
+    count: 60
+    reference: none
+    templates:
+      - {id: sva_t1, text: "I think that the {subject} {prep} the {noun}"}
+      - {id: sva_t2, text: "Everyone knows that the {subject} {prep} the {noun}"}
+    subjects: [[key, keys], [dog, dogs], [book, books], [car, cars], [friend, friends],
+               [teacher, teachers], [door, doors], [bottle, bottles], [picture, pictures],
+               [student, students]]
+    nouns: [[cabinet, cabinets], [house, houses], [table, tables], [window, windows]]
+    preps: [to, near, behind, on]

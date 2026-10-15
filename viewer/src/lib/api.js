@@ -12,11 +12,12 @@ export async function getInfo() {
   return response.json();
 }
 
-export async function analyze(prompt, signal) {
+// `answers` = { correct, wrong } tokens for DLA; leave them null for the top two guesses.
+export async function analyze(prompt, signal, answers = {}) {
   const response = await fetch('api/analyze', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ prompt }),
+    body: JSON.stringify({ prompt, ...answers }),
     signal,
   });
   if (!response.ok) {
@@ -30,6 +31,19 @@ export async function analyze(prompt, signal) {
   }
   return response.json();
 }
+
+// Saved batch results (written by `python -m interp.run`). Served by the Python server
+// in live mode, and published next to the viewer on GitHub Pages.
+async function getJson(path) {
+  const response = await fetch(path);
+  const type = response.headers.get('content-type') ?? '';
+  if (!response.ok || !type.includes('json')) throw new Error(`Could not load ${path}`);
+  return response.json();
+}
+
+export const savedModels = () => getJson('results/index.json').then((d) => d.models);
+export const savedIndex = (model) => getJson(`results/${model}/index.json`);
+export const savedResult = (model, id) => getJson(`results/${model}/${id}.json`).then(checkResult);
 
 // Check that a dropped file looks like a result file before drawing it.
 export function checkResult(data) {

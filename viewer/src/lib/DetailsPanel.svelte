@@ -1,22 +1,31 @@
 <!--
-  Details for one clicked component. New panels (attention pattern, tokens it
-  pushes up or down, DLA and causal scores, logit lens) get added here as the
-  views from planning.md §7 are built.
+  Details for one clicked component: its score in every view, with ranks, and (for heads)
+  which tokens the last position attends to (V3). More panels (tokens it pushes up or
+  down, causal scores, logit lens) get added here as the views in planning.md §7 are built.
 -->
 <script>
+  import { showToken } from './api.js';
+
   let { result, selected, onclose = () => {} } = $props();
 
   let isMlp = $derived(selected.head === null);
   let name = $derived(isMlp ? `MLP ${selected.layer}` : `Layer ${selected.layer}, head ${selected.head}`);
-  let value = $derived(
-    isMlp
-      ? result.activation.mlp[selected.layer]
-      : result.activation.heads[selected.layer][selected.head],
+
+  // Rank among components of the same kind (heads with heads, MLPs with MLPs), because
+  // head and MLP outputs are on different scales. Signed views rank by size (absolute value).
+  function score(map, signed) {
+    const value = isMlp ? map.mlp[selected.layer] : map.heads[selected.layer][selected.head];
+    const peers = isMlp ? map.mlp : map.heads.flat();
+    const size = (v) => (signed ? Math.abs(v) : v);
+    return { value, rank: 1 + peers.filter((v) => size(v) > size(value)).length, of: peers.length };
+  }
+
+  let activation = $derived(score(result.activation, false));
+  let dla = $derived(result.dla ? score(result.dla, true) : null);
+  let attention = $derived(
+    !isMlp && result.attention ? result.attention[selected.layer][selected.head] : null,
   );
-  // Rank among components of the same kind (heads with heads, MLPs with MLPs),
-  // because head and MLP output sizes are on different scales.
-  let peers = $derived(isMlp ? result.activation.mlp : result.activation.heads.flat());
-  let rank = $derived(1 + peers.filter((v) => v > value).length);
+  let maxAttention = $derived(attention ? Math.max(...attention) : 1);
 </script>
 
 <aside class="panel">
@@ -24,16 +33,35 @@
     <h3>{name}</h3>
     <button type="button" onclick={onclose} aria-label="Close details">×</button>
   </header>
+
   <dl>
-    <dt>Activation strength</dt>
-    <dd>{value.toFixed(3)}</dd>
-    <dt>Rank</dt>
-    <dd>{rank} of {peers.length} {isMlp ? 'MLPs' : 'heads'}</dd>
+    <dt>Activation</dt>
+    <dd>{activation.value.toFixed(2)} <small>rank {activation.rank} of {activation.of}</small></dd>
+    {#if dla}
+      <dt>DLA</dt>
+      <dd>
+        {dla.value > 0 ? '+' : ''}{dla.value.toFixed(3)}
+        <small>
+          {dla.value >= 0 ? 'toward' : 'away from'} the correct answer · rank {dla.rank} of {dla.of} by size
+        </small>
+      </dd>
+    {/if}
   </dl>
-  <p class="planned">
-    Planned here: attention pattern{isMlp ? '' : ' of this head'}, which output words it pushes up or
-    down, and its DLA and causal scores next to this one.
-  </p>
+
+  {#if attention}
+    <h4>What the last token reads <small>(attention)</small></h4>
+    <ol class="attention">
+      {#each attention as weight, i}
+        <li>
+          <span class="token">{showToken(result.tokens[i])}</span>
+          <span class="bar" style:width={`${(weight / maxAttention) * 100}%`}></span>
+          <span class="weight">{(weight * 100).toFixed(0)}%</span>
+        </li>
+      {/each}
+    </ol>
+  {:else if isMlp}
+    <p class="note">MLPs work on one token at a time, so they have no attention pattern.</p>
+  {/if}
 </aside>
 
 <style>
@@ -42,7 +70,7 @@
     border-radius: 8px;
     padding: 12px 16px;
     background: var(--surface);
-    min-width: 220px;
+    min-width: 260px;
   }
   header {
     display: flex;
@@ -53,6 +81,14 @@
     margin: 0;
     font-size: 15px;
   }
+  h4 {
+    font-size: 13px;
+    margin: 12px 0 6px;
+  }
+  small {
+    color: var(--muted);
+    font-weight: normal;
+  }
   button {
     border: none;
     background: none;
@@ -62,9 +98,9 @@
   }
   dl {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: auto 1fr;
     gap: 4px 12px;
-    margin: 12px 0;
+    margin: 12px 0 0;
     font-size: 14px;
   }
   dt {
@@ -74,9 +110,39 @@
     margin: 0;
     font-variant-numeric: tabular-nums;
   }
-  .planned {
+  .attention {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 12px;
+  }
+  .attention li {
+    display: grid;
+    grid-template-columns: 90px 1fr 36px;
+    align-items: center;
+    gap: 6px;
+    margin: 2px 0;
+  }
+  .token {
+    font-family: ui-monospace, Consolas, monospace;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .bar {
+    height: 10px;
+    background: var(--accent);
+    border-radius: 2px;
+    transition: width 300ms ease;
+  }
+  .weight {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    color: var(--muted);
+  }
+  .note {
     font-size: 12px;
     color: var(--muted);
-    margin: 0;
+    margin: 12px 0 0;
   }
 </style>

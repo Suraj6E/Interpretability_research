@@ -7,7 +7,7 @@ An open-source mechanistic interpretability project with interactive visualizati
 ![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)
 ![Status: early stage](https://img.shields.io/badge/status-early%20stage-orange.svg)
 
-> **Status: early stage.** A live activation map for GPT-2 small works: type a prompt and the map updates. The contribution and causal maps are not built yet. Sections marked 🚧 are planned, not finished. Nothing here is a research result yet. Star or watch the repo to follow along as the maps get built.
+> **Status: early stage.** For GPT-2 small, the activation map and the contribution map (direct logit attribution) work, live as you type and for a first question set of 251 questions across 5 skills. Clicking a head shows which words it reads. The causal map is not built yet. Sections marked 🚧 are planned, not finished. Nothing here is a research result yet. Star or watch the repo to follow along as the maps get built.
 
 ---
 
@@ -97,7 +97,7 @@ BATCH:  questions/*.json   →  python -m interp.run                            
 
 ## Quickstart
 
-Tested on Windows with Python 3.13 and an NVIDIA GPU. Only the activation map works so far.
+Tested on Windows with Python 3.13 and an NVIDIA GPU. The activation and contribution (DLA) maps work so far.
 
 ```bash
 git clone https://github.com/Suraj6E/Interpretability_research.git
@@ -113,11 +113,12 @@ pip install -e . --no-deps
 # Build the viewer once (needs Node.js)
 cd viewer && npm install && npm run build && cd ..
 
-# Live mode: open http://127.0.0.1:8000 and type a prompt
+# Live mode: open http://127.0.0.1:8000, type a prompt, or pick a saved question
 python -m interp.serve
 
-# Batch mode: run a question file and save results
-python -m interp.run --config configs/smoke_gpt2.yaml
+# Batch mode: rebuild the question set, then filter it and save maps for every kept question
+python -m interp.questions --config configs/questions_v0.yaml
+python -m interp.run --config configs/gpt2_v0.yaml    # about 4 minutes on a laptop GPU
 ```
 
 No GPU? A [Colab launcher](notebooks/colab_launcher.ipynb) runs batch mode on a free Colab GPU.
@@ -128,12 +129,12 @@ No GPU? A [Colab launcher](notebooks/colab_launcher.ipynb) runs batch mode on a 
 Interpretability_research/
 ├── planning.md       # vision, phases, decisions log
 ├── configs/          # models.yaml (pinned model versions) and one YAML per experiment
-├── questions/        # question sets with twins (JSON); only a 2-question smoke test so far
+├── questions/        # question sets with twins (JSON): skills_v0 (1,864 pairs, 5 skills) and a smoke test
 ├── interp/           # Python package: model.py, metrics.py, run.py (batch), serve.py (live)
 ├── tests/            # checks that hooks and metrics measure what they claim
 ├── viewer/           # interactive model map (Svelte + D3)
 ├── notebooks/        # Colab launcher (no logic; runs the commands above)
-└── results/          # 🚧 saved result JSON per model and question
+└── results/          # saved results per model: one JSON per kept question, index.json, filter_report.json
 ```
 
 ## How to read the maps (honest caveats)
@@ -149,8 +150,10 @@ Interpretability_research/
 Full details are in [planning.md](planning.md).
 
 - [x] Project plan and question-set design
-- [ ] Phase 1: Activation map for GPT-2 small
-- [ ] Phase 2: Contribution map and attention viewer
+- [x] Phase 0: Question set v0 (5 skills, 251 questions kept for GPT-2 small)
+- [x] Phase 1: Activation map for GPT-2 small
+- [x] Phase 2: Contribution map (DLA) and a first attention viewer
+- [ ] Publish the viewer on GitHub Pages
 - [ ] Phase 3: Causal map, checked against known circuits
 - [ ] Phase 4: Skill fingerprints, the disagreement view, an "activation vs. causal" study, and a model-size comparison (Pythia suite)
 - [ ] Phase 5: Larger models beyond Pythia (e.g., Gemma-2-2b), sparse-autoencoder features, attribution graphs

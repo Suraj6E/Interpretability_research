@@ -2,13 +2,19 @@
   import { onMount } from 'svelte';
   import ModelMap from './lib/ModelMap.svelte';
   import DetailsPanel from './lib/DetailsPanel.svelte';
-  import { getInfo, analyze, checkResult, showToken } from './lib/api.js';
+  import QuestionPicker from './lib/QuestionPicker.svelte';
+  import QuestionInfo from './lib/QuestionInfo.svelte';
+  import { getInfo, analyze, checkResult, showToken, savedModels, savedResult } from './lib/api.js';
 
   // 'checking' until we know whether a live server answers; then 'live' or 'static'.
   let mode = $state('checking');
   let info = $state(null);
+  let savedModel = $state(null); // model whose saved results the picker lists
   let prompt = $state('When Mary and John went to the store, John gave a drink to');
+  let answers = $state({ correct: null, wrong: null }); // null = the model's top two guesses
   let result = $state(null);
+  let source = $state('live'); // 'live', 'saved' or 'file'
+  let view = $state('activation'); // 'activation' or 'dla'
   let error = $state('');
   let busy = $state(false);
   let selected = $state(null);
@@ -19,29 +25,33 @@
     try {
       info = await getInfo();
       mode = 'live';
+      savedModel = info.model;
     } catch {
       mode = 'static';
+      savedModel = await savedModels().then((models) => models[0]).catch(() => null);
     }
   });
 
-  // Live mode: run the model shortly after the prompt stops changing.
+  // Live mode: run the model shortly after the prompt (or the chosen answers) stop changing.
   let controller;
   let requestId = 0;
   $effect(() => {
     if (mode !== 'live') return;
     const text = prompt;
+    const chosen = { ...answers };
     if (!text.trim()) return;
-    const timer = setTimeout(() => run(text), 250);
+    const timer = setTimeout(() => run(text, chosen), 250);
     return () => clearTimeout(timer);
   });
 
-  async function run(text) {
+  async function run(text, chosen) {
     controller?.abort();
     controller = new AbortController();
     const id = ++requestId;
     busy = true;
     try {
-      result = await analyze(text, controller.signal);
+      result = await analyze(text, controller.signal, chosen);
+      source = 'live';
       error = '';
     } catch (e) {
       if (e.name !== 'AbortError') error = e.message;
@@ -50,11 +60,27 @@
     }
   }
 
+  function onPromptInput() {
+    // A new prompt has new top guesses, so go back to comparing those.
+    answers = { correct: null, wrong: null };
+  }
+
+  async function pickSaved(id) {
+    try {
+      result = await savedResult(savedModel, id);
+      source = 'saved';
+      error = '';
+    } catch (e) {
+      error = e.message;
+    }
+  }
+
   // Static mode: load a saved result file by drag-and-drop or the file picker.
   async function loadFile(file) {
     if (!file) return;
     try {
       result = checkResult(JSON.parse(await file.text()));
+      source = 'file';
       selected = null;
       error = '';
     } catch (e) {
@@ -67,6 +93,24 @@
     dragging = false;
     loadFile(event.dataTransfer.files[0]);
   }
+
+  let hasDla = $derived(Boolean(result?.dla));
+  let shownView = $derived(view === 'dla' && hasDla ? 'dla' : 'activation');
+  let isGreaterThan = $derived(result?.metric?.type === 'prob_diff');
+  let dlaTarget = $derived(
+    !result
+      ? ''
+      : isGreaterThan
+        ? `years after ${String(result.year).padStart(2, '0')}`
+        : `"${showToken(result.correct ?? '')}" rather than "${showToken(result.wrong ?? '')}"`,
+  );
+  // When a head is selected, shade each token by how much the last token attends to it.
+  let attentionRow = $derived(
+    selected && selected.head !== null && result?.attention
+      ? result.attention[selected.layer][selected.head]
+      : null,
+  );
+  let guessTokens = $derived(result?.top_predictions?.map((g) => g.token) ?? []);
 </script>
 
 <svelte:window
@@ -90,15 +134,20 @@
 
   {#if mode === 'live'}
     <label class="prompt">
-      <span>Prompt</span>
-      <textarea bind:value={prompt} rows="2" spellcheck="false"></textarea>
+      <span>Prompt {#if source !== 'live'}<em>(showing a saved question; edit to go back to live)</em>{/if}</span>
+      <textarea bind:value={prompt} oninput={onPromptInput} rows="2" spellcheck="false"></textarea>
     </label>
   {:else if mode === 'static'}
     <div class="drop">
-      Drop a result file (<code>results/&lt;model&gt;/&lt;id&gt;.json</code>) anywhere on this page, or
+      Pick a saved question below, or drop a result file (<code>results/&lt;model&gt;/&lt;id&gt;.json</code>)
+      anywhere on this page, or
       <label class="file">choose one<input type="file" accept=".json,application/json" onchange={(e) => loadFile(e.currentTarget.files[0])} /></label>.
       To type your own prompts, run <code>python -m interp.serve</code> locally.
     </div>
+  {/if}
+
+  {#if savedModel}
+    <QuestionPicker model={savedModel} onpick={pickSaved} />
   {/if}
 
   {#if error}
@@ -106,12 +155,23 @@
   {/if}
 
   {#if result}
+    {#if source === 'saved' || (source === 'file' && result.metric)}
+      <QuestionInfo {result} />
+    {/if}
+
     <section class="tokens" class:stale={busy}>
       <div>
-        <h2>Tokens</h2>
+        <h2>Tokens {#if attentionRow}<small>shaded by L{selected.layer} H{selected.head}'s attention from the last token</small>{/if}</h2>
         <div class="chips">
           {#each result.tokens as token, i}
-            <span class="chip" class:last={i === result.tokens.length - 1}>{showToken(token)}</span>
+            <span
+              class="chip"
+              class:last={i === result.tokens.length - 1}
+              style:background={attentionRow
+                ? `color-mix(in srgb, var(--accent) ${Math.round(attentionRow[i] * 100)}%, var(--surface))`
+                : null}
+              title={attentionRow ? `${(attentionRow[i] * 100).toFixed(1)}% attention` : null}
+            >{showToken(token)}</span>
           {/each}
         </div>
       </div>
@@ -129,10 +189,44 @@
 
     <section class="views" class:stale={busy}>
       <div>
-        <h2>Activation strength <small>at the last token</small></h2>
+        <div class="view-bar">
+          <div class="tabs" role="tablist" aria-label="Map view">
+            <button type="button" role="tab" aria-selected={shownView === 'activation'} onclick={() => (view = 'activation')}>
+              Activation
+            </button>
+            <button type="button" role="tab" aria-selected={shownView === 'dla'} disabled={!hasDla} onclick={() => (view = 'dla')}>
+              Contribution (DLA)
+            </button>
+          </div>
+          {#if shownView === 'dla' && source === 'live' && guessTokens.length > 1}
+            <div class="answers">
+              <label>
+                toward
+                <select value={result.correct} onchange={(e) => (answers = { correct: e.currentTarget.value, wrong: result.wrong })}>
+                  {#each guessTokens as t}<option value={t}>{showToken(t)}</option>{/each}
+                </select>
+              </label>
+              <label>
+                rather than
+                <select value={result.wrong} onchange={(e) => (answers = { correct: result.correct, wrong: e.currentTarget.value })}>
+                  {#each guessTokens as t}<option value={t}>{showToken(t)}</option>{/each}
+                </select>
+              </label>
+            </div>
+          {/if}
+        </div>
+
+        <h2>
+          {#if shownView === 'dla'}
+            Direct push toward {dlaTarget} <small>at the last token</small>
+          {:else}
+            Activation strength <small>at the last token</small>
+          {/if}
+        </h2>
         <ModelMap
-          heads={result.activation.heads}
-          mlp={result.activation.mlp}
+          values={shownView === 'dla' ? result.dla : result.activation}
+          kind={shownView === 'dla' ? 'diverging' : 'sequential'}
+          label={shownView === 'dla' ? 'DLA' : 'activation'}
           {sharedScale}
           {selected}
           onselect={(s) => (selected = s)}
@@ -151,12 +245,26 @@
           <p>
             Each square is one part of the model, measured at the <strong>last token</strong> of the
             prompt. Rows are layers (L0 is first). The 12 columns are attention heads; the last
-            column is that layer's MLP. Darker means the part's output was bigger (its L2 norm).
+            column is that layer's MLP. Click a head to see which tokens it reads.
           </p>
-          <p>
-            <strong>Correlation only.</strong> A dark square fired strongly. That does not show it
-            mattered for the answer. The causal view (planned) tests that.
-          </p>
+          {#if shownView === 'dla'}
+            <p>
+              <strong>Blue</strong> parts push the model directly toward {dlaTarget};
+              <strong>red</strong> parts push the other way. White means little direct effect.
+            </p>
+            <p>
+              <strong>Direct effects only.</strong> A part can also matter by changing later parts,
+              which DLA does not count. Still correlation: the causal view (planned) tests what is
+              actually needed.
+            </p>
+          {:else}
+            <p>Darker means the part's output was bigger (its L2 norm).</p>
+            <p>
+              <strong>Correlation only.</strong> A dark square fired strongly. That does not show it
+              mattered for the answer, or even which way it pushed: see the DLA view and, later, the
+              causal view.
+            </p>
+          {/if}
         </aside>
       </div>
     </section>
@@ -261,6 +369,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 4px;
+    max-width: 640px;
   }
   .chip {
     font-family: ui-monospace, Consolas, monospace;
@@ -269,6 +378,7 @@
     border-radius: 4px;
     background: var(--surface);
     border: 1px solid var(--grid-line);
+    transition: background 300ms ease;
   }
   .chip.last {
     border-color: var(--accent);
@@ -284,6 +394,52 @@
     flex-wrap: wrap;
     gap: 24px;
     align-items: flex-start;
+  }
+  .view-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .tabs {
+    display: inline-flex;
+    border: 1px solid var(--grid-line);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .tabs button {
+    font: inherit;
+    font-size: 13px;
+    padding: 5px 12px;
+    border: none;
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+  }
+  .tabs button[aria-selected='true'] {
+    background: var(--accent);
+    color: #fff;
+  }
+  .tabs button:disabled {
+    color: var(--muted);
+    cursor: not-allowed;
+  }
+  .answers {
+    display: flex;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .answers select {
+    font-family: ui-monospace, Consolas, monospace;
+    font-size: 13px;
+    margin-left: 4px;
+    padding: 2px 4px;
+    border: 1px solid var(--grid-line);
+    border-radius: 4px;
+    background: var(--surface);
+    color: var(--text);
   }
   .side {
     display: flex;

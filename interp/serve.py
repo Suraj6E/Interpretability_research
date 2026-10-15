@@ -19,12 +19,16 @@ from pydantic import BaseModel
 from interp.model import load_model, model_spec
 from interp.results import analyze_prompt
 
-VIEWER_DIST = Path(__file__).resolve().parent.parent / "viewer" / "dist"
+ROOT = Path(__file__).resolve().parent.parent
+VIEWER_DIST = ROOT / "viewer" / "dist"
+RESULTS_DIR = ROOT / "results"
 MAX_PROMPT_CHARS = 2000
 
 
 class AnalyzeRequest(BaseModel):
     prompt: str
+    correct: str | None = None  # answer tokens DLA compares; default: the top two guesses
+    wrong: str | None = None
 
 
 def create_app(model, spec) -> FastAPI:
@@ -49,11 +53,16 @@ def create_app(model, spec) -> FastAPI:
             raise HTTPException(400, f"The prompt is longer than {MAX_PROMPT_CHARS} characters.")
         with lock:
             try:
-                return analyze_prompt(model, request.prompt, spec.key)
-            except ValueError as error:
+                return analyze_prompt(
+                    model, request.prompt, spec.key, request.correct, request.wrong
+                )
+            except ValueError as error:  # too long, or an answer that isn't one token
                 raise HTTPException(400, str(error)) from error
 
-    # Registered after the API routes, so /api/* is never shadowed by the viewer files.
+    # Saved batch results, for the viewer's question picker.
+    if RESULTS_DIR.exists():
+        app.mount("/results", StaticFiles(directory=RESULTS_DIR), name="results")
+    # Registered last, so /api/* and /results/* are never shadowed by the viewer files.
     if VIEWER_DIST.exists():
         app.mount("/", StaticFiles(directory=VIEWER_DIST, html=True), name="viewer")
     return app

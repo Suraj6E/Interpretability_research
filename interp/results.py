@@ -17,27 +17,46 @@ import torch
 from interp import __version__, metrics
 from interp.model import PROCESSING, ModelSpec
 
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2
 MAX_TOKENS = 256  # longer prompts are refused; component maps are measured at one position anyway
 
 
-def analyze_prompt(model, prompt: str, model_key: str) -> dict:
-    """Everything the viewer shows for one free-form prompt (live mode)."""
+def analyze_prompt(
+    model, prompt: str, model_key: str, correct: str | None = None, wrong: str | None = None
+) -> dict:
+    """Everything the viewer shows for one free-form prompt (live mode).
+
+    DLA compares two answer tokens. If they are not given, the model's top two guesses are
+    used. Raises metrics.AnswerTokenError if a given answer is not a single token.
+    """
     tokens, logits, cache = metrics.run_prompt(model, prompt, max_tokens=MAX_TOKENS)
+    top = metrics.top_predictions(model, logits)
+    correct = correct or top[0]["token"]
+    wrong = wrong or top[1]["token"]
+    direction = metrics.logit_diff_direction(
+        model, metrics.single_token_id(model, correct), metrics.single_token_id(model, wrong)
+    )
     return {
         "schema_version": SCHEMA_VERSION,
         "model": model_key,
         "prompt": prompt,
+        "correct": correct,
+        "wrong": wrong,
         "tokens": metrics.str_tokens(model, tokens),
         "activation": metrics.activation_strength(model, cache),
-        "top_predictions": metrics.top_predictions(model, logits),
+        "dla": metrics.direct_logit_attribution(model, cache, direction),
+        "attention": metrics.attention_from_last(model, cache),
+        "top_predictions": top,
     }
 
 
 def analyze_question(model, question: dict, model_key: str) -> dict:
-    """One question from a question file: the clean prompt's maps plus logit differences."""
-    correct_id = metrics.single_token_id(model, question["correct"])
-    wrong_id = metrics.single_token_id(model, question["wrong"])
+    """One question from a question file: the clean prompt's maps, the task metric on the
+    clean and twin prompts, and the model's top guess on each.
+
+    Raises metrics.AnswerTokenError if an answer is not a single token (protocol §3 rule 1).
+    """
+    measure, direction = _task(model, question)
     tokens, logits, cache = metrics.run_prompt(model, question["clean"], max_tokens=MAX_TOKENS)
     twin_tokens, twin_logits, _ = metrics.run_prompt(model, question["twin"], max_tokens=MAX_TOKENS)
     return {
@@ -47,17 +66,43 @@ def analyze_question(model, question: dict, model_key: str) -> dict:
         "model": model_key,
         "clean": question["clean"],
         "twin": question["twin"],
-        "correct": question["correct"],
-        "wrong": question["wrong"],
+        **{key: question[key] for key in ("correct", "wrong", "year") if key in question},
         "tokens": metrics.str_tokens(model, tokens),
         "n_tokens": {"clean": tokens.shape[-1], "twin": twin_tokens.shape[-1]},
-        "logit_diff": {
-            "clean": metrics.logit_diff(logits, correct_id, wrong_id),
-            "twin": metrics.logit_diff(twin_logits, correct_id, wrong_id),
+        "metric": {
+            "type": question.get("metric", "logit_diff"),
+            "clean": measure(logits),
+            "twin": measure(twin_logits),
+        },
+        "top1": {
+            "clean": metrics.top_token(model, logits),
+            "twin": metrics.top_token(model, twin_logits),
         },
         "activation": metrics.activation_strength(model, cache),
+        "dla": metrics.direct_logit_attribution(model, cache, direction),
+        "attention": metrics.attention_from_last(model, cache),
         "top_predictions": metrics.top_predictions(model, logits),
     }
+
+
+def _task(model, question: dict):
+    """For this question's task (protocol §2.3): the function that scores logits, and the
+    unembedding direction that DLA projects onto."""
+    kind = question.get("metric", "logit_diff")
+    if kind == "logit_diff":
+        correct = metrics.single_token_id(model, question["correct"])
+        wrong = metrics.single_token_id(model, question["wrong"])
+        return (
+            lambda logits: metrics.logit_diff(logits, correct, wrong),
+            metrics.logit_diff_direction(model, correct, wrong),
+        )
+    if kind == "prob_diff":
+        years, year = metrics.year_token_ids(model), question["year"]
+        return (
+            lambda logits: metrics.greater_than_prob_diff(logits, years, year),
+            metrics.greater_than_direction(model, years, year),
+        )
+    raise KeyError(f"Unknown metric {kind!r} in question {question['id']}")
 
 
 def run_metadata(spec: ModelSpec, config_path: Path, questions_path: Path, device: str) -> dict:
@@ -83,7 +128,9 @@ def run_metadata(spec: ModelSpec, config_path: Path, questions_path: Path, devic
 def save_result(result: dict, out_dir: Path) -> Path:
     out_dir.mkdir(parents=True, exist_ok=True)
     path = out_dir / f"{result['id']}.json"
-    path.write_text(json.dumps(result, indent=1), encoding="utf-8")
+    # Compact (no indentation): result files hold thousands of numbers, and whitespace
+    # around each one would roughly triple the file size.
+    path.write_text(json.dumps(result, separators=(",", ":")), encoding="utf-8")
     return path
 
 

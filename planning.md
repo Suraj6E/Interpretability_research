@@ -47,7 +47,7 @@ Pythia is used for RQ4 because every size was trained on the same data in the sa
 
 | Metric | Definition | Meaning |
 |---|---|---|
-| **Logit difference (LD)** | logit(correct answer) − logit(wrong answer) | How strongly the model prefers the right answer |
+| **Task metric M** | **Logit difference (LD)** = logit(correct) − logit(wrong) for most skills; for greater-than, **probability difference (PD)** = P(year > YY) − P(year ≤ YY) (Hanna et al. 2023) | How strongly the model prefers the right answer. The patching formulas below use M wherever they say LD |
 | **Activation strength** | Size (L2 norm) of a head's or MLP's output at the final token | How strongly a part fired (**correlational**) |
 | **Direct logit attribution (DLA)** | A part's output projected onto the "correct minus wrong" answer direction, after the final layer norm | How much a part directly pushed toward the right answer (**correlational**; ignores indirect effects through later parts) |
 | **Denoising recovery** | (LD_patched − LD_twin) / (LD_clean − LD_twin), patching the clean activation into the twin run | 0 = no effect, 1 = restoring this part alone brings back the full answer (sufficiency-like, **causal**) |
@@ -57,12 +57,14 @@ Pythia is used for RQ4 because every size was trained on the same data in the sa
 
 ## 5. Question set design
 
-**Rules**
-1. The answer must be a **single token**, so the logit difference is simple to compute.
+**Rules** (exact inclusion rules: `docs/RESEARCH_PROTOCOL.md` §3)
+1. The answer must be a **single token**, so the task metric is simple to compute.
 2. A question and its twin differ in **one detail only**.
 3. A question and its twin have the **same number of tokens**, so positions line up for patching.
-4. Keep only questions the model answers correctly (LD > 0). A wrong answer has no mechanism to explain.
+4. Keep only questions the model answers correctly: the correct answer must be its **top-1 guess** (and the wrong one its top-1 on the twin). A wrong answer has no mechanism to explain.
 5. Aim for 30–50 questions per skill, generated from templates.
+
+**Generation:** `python -m interp.questions --config configs/questions_v0.yaml` writes every generated pair to `questions/skills_v0.json` (no model involved). `python -m interp.run` then keeps, per model, the questions that pass the rules. Templates and word lists live in the config; details and limitations in `docs/DATASHEET.md`.
 
 **Format (one entry)**
 
@@ -70,15 +72,21 @@ Pythia is used for RQ4 because every size was trained on the same data in the sa
 {
   "id": "ioi_001",
   "skill": "indirect_object",
+  "template_id": "ioi_t1",
   "clean": "When Mary and John went to the store, John gave a drink to",
   "twin": "When Mary and John went to the store, Mary gave a drink to",
+  "metric": "logit_diff",
   "correct": " Mary",
   "wrong": " John",
   "reference": "Wang et al. 2023"
 }
 ```
 
+Greater-than entries have `"metric": "prob_diff"` and `"year": 32` instead of `correct`/`wrong`. Fact-recall entries have a `"group"`: several twin candidates share one clean prompt, and only one is kept.
+
 **Skills (version 1):** induction, indirect object, greater-than, fact recall, grammar agreement. Two-step reasoning is added in Phase 5, since it needs a larger model.
+
+**Question set v0 on GPT-2 small** (kept / generated): induction 59/60, indirect object 65/160, greater-than 58/60, fact recall 27 of 127 clean prompts, agreement 42/60. Counts by exclusion rule: `results/gpt2-small/filter_report.json`.
 
 ## 6. Architecture
 
@@ -100,7 +108,7 @@ results/<model>/<id>.json    same JSON, sent over HTTP
         └────────────┬────────────┘
                      ▼
 viewer/  (Svelte + D3, built into static files)
-  static mode: GitHub Pages; loads saved results ("Load example" or drag-and-drop)
+  static mode: GitHub Pages; loads saved results (question picker or drag-and-drop)
   live mode:   served by interp/serve.py; maps redraw when the prompt changes
 ```
 
@@ -110,18 +118,24 @@ Live mode keeps a single implementation of the model, so numbers in the viewer, 
 
 ```json
 {
+  "schema_version": 2,
   "id": "ioi_001",
+  "skill": "indirect_object",
   "model": "gpt2-small",
-  "logit_diff": { "clean": 3.2, "twin": -3.1 },
+  "clean": "...", "twin": "...", "correct": " Mary", "wrong": " John",
+  "tokens": ["<|endoftext|>", "When", " Mary", "..."],
+  "n_tokens": { "clean": 15, "twin": 15 },
+  "metric": { "type": "logit_diff", "clean": 3.36, "twin": -2.48 },
+  "top1": { "clean": " Mary", "twin": " John" },
   "activation": { "heads": [[0.0]], "mlp": [0.0] },
   "dla":        { "heads": [[0.0]], "mlp": [0.0] },
-  "denoising":  { "heads": [[0.0]], "mlp": [0.0] },
-  "noising":    { "heads": [[0.0]], "mlp": [0.0] },
-  "attention":  { "tokens": ["When", " Mary"], "patterns": "stored separately" }
+  "attention":  [[[0.0]]],
+  "top_predictions": [{ "token": " Mary", "prob": 0.677 }],
+  "meta": { "git_commit": "...", "model": { "revision": "..." }, "processing": {}, "versions": {} }
 }
 ```
 
-(`heads` is a layers × heads grid, 12 × 12 for GPT-2 small. `mlp` has one value per layer.)
+`heads` is a layers × heads grid (12 × 12 for GPT-2 small) and `mlp` has one value per layer. `attention` is [layer][head][token]: how much the last token attends to each token, rounded to 4 decimals. All 144 heads are stored for GPT-2; for large models, store only the top-k heads (`docs/COMPUTE.md` §4). `denoising` and `noising` maps are added in Phase 3. Live mode returns the same shape without the question fields.
 
 ## 7. Visualizations
 
@@ -204,8 +218,14 @@ Which model runs on which hardware in each phase: `docs/COMPUTE.md` §7.
 | 2026-10-14 | Code layout: shared `interp/` package; each step is one command (`python -m interp.<step> --config ...`) | Each piece is written once and tested; the live server reuses it; matches `docs/REPRODUCIBILITY.md` §6 |
 | 2026-10-14 | Colab: one tiny launcher notebook with no logic (download, install, run) | Keeps goal G4 without notebook-based development |
 | 2026-10-14 | Environment: Python 3.13, torch 2.14.1 (CUDA 13.0 build locally), TransformerLens 4.2.0 | Latest versions that support this machine (RTX 4070 Laptop, 8 GB); exact pins live in `requirements.txt` |
-| 2026-10-14 | Load models as TransformerLens `TransformerBridge` with compatibility mode and default weight processing (fold LayerNorm, center writing weights and unembedding, fold value biases); recorded in every result's `meta.processing` | TransformerLens 4.0 (2026-09-21) removed `HookedTransformer`. Centering changes component output norms (it removes each output's mean, which the next LayerNorm removes anyway), so the setting must be fixed and reported |
 | 2026-10-14 | Pythia is the size suite for the scale study (RQ4), not the final model | Same data and training order at every size, so size is the main thing that changes; the final larger model is still open (§13) |
+| 2026-10-14 | Load models as TransformerLens `TransformerBridge` with compatibility mode and default weight processing (fold LayerNorm, center writing weights and unembedding, fold value biases); recorded in every result's `meta.processing` | TransformerLens 4.0 (2026-09-21) removed `HookedTransformer`. Centering changes component output norms (it removes each output's mean, which the next LayerNorm removes anyway), so the setting must be fixed and reported |
+| 2026-10-15 | Inclusion rule 3 made stricter: the correct answer must be the model's top-1 guess on the clean prompt, and the wrong answer its top-1 on the twin | LD alone kept "The Eiffel Tower is in the city of" although GPT-2's top guess was " London"; we explain the answer the model actually gives |
+| 2026-10-15 | Greater-than scored with Hanna et al.'s probability difference (PD); the protocol's formulas now use a per-skill "task metric" M (LD or PD). Rule 4 gap for PD: ≥ 0.2, provisional | Greater-than has many correct answers, so one token pair would be a noisy stand-in; PD keeps results comparable with Hanna et al. 2023 |
+| 2026-10-15 | DLA for greater-than projects onto mean W_U(years > YY) − mean W_U(years ≤ YY) | PD is not linear in the logits, so this direction is an approximation; stated wherever greater-than DLA is shown |
+| 2026-10-15 | Question set v0: induction uses common words instead of random tokens; grammar templates start "I think that the …" / "Everyone knows that the …"; fact recall offers up to 12 twin candidates per clean prompt and keeps the first that passes | Words survive tokenization; a GPT-2 pilot gave the verb as top guess 92% of the time vs 41% for "The …"; equal-length twins are rare, so several candidates are needed |
+| 2026-10-15 | Raised generated counts after a first GPT-2 run (IOI 80 → 160; fact recall +45 capitals, 4 → 12 twin candidates); no further tuning once fact recall reached 27 | Reach the planned 30–50 per skill without lowering the bar; stopped there to avoid fitting the question set to GPT-2's knowledge. No research-question result was looked at |
+| 2026-10-15 | Saved results store attention from the last token for all heads (rounded to 4 decimals) and are written as compact JSON (about 23 KB per question) | Lets the viewer show any head's attention for saved questions; size stays small for GPT-2. For large models, store only top-k heads (`docs/COMPUTE.md` §4) |
 
 ## 13. Open questions
 

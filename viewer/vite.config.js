@@ -7,7 +7,7 @@ export default defineConfig({
   // sub-path) and when served by `python -m interp.serve`.
   base: './',
   server: {
-    // During `npm run dev`, forward API calls to the local Python server.
-    proxy: { '/api': 'http://127.0.0.1:8000' },
+    // During `npm run dev`, forward API calls and saved results to the local Python server.
+    proxy: { '/api': 'http://127.0.0.1:8000', '/results': 'http://127.0.0.1:8000' },
   },
 });

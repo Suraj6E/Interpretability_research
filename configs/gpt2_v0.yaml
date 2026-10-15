@@ -1,0 +1,7 @@
+# Activation maps for question set v0 on GPT-2 small (Phase 1). Exploratory: the
+# protocol is not frozen yet (docs/RESEARCH_PROTOCOL.md §8).
+# Run with: python -m interp.run --config configs/gpt2_v0.yaml
+
+model: gpt2-small            # key in configs/models.yaml (pinned revision)
+questions: questions/skills_v0.json
+output_dir: results
