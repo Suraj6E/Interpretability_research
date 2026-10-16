@@ -1,0 +1,1260 @@
+{
+ "model": "gpt2-small",
+ "questions": [
+  {
+   "id": "ind_001",
+   "skill": "induction",
+   "clean": "temple basket castle table valley silver hammer jacket pepper helmet temple basket castle"
+  },
+  {
+   "id": "ind_002",
+   "skill": "induction",
+   "clean": "dragon silver garden rocket ladder market queen engine chair jacket dragon silver garden rocket"
+  },
+  {
+   "id": "ind_003",
+   "skill": "induction",
+   "clean": "chair winter ribbon butter tunnel doctor pencil ocean wagon valley chair winter ribbon butter tunnel"
+  },
+  {
+   "id": "ind_004",
+   "skill": "induction",
+   "clean": "wagon finger doctor lemon cotton guitar summer market ribbon rabbit wagon finger doctor lemon"
+  },
+  {
+   "id": "ind_005",
+   "skill": "induction",
+   "clean": "candle apple guitar pencil butter hammer bottle wallet finger market candle apple guitar pencil"
+  },
+  {
+   "id": "ind_006",
+   "skill": "induction",
+   "clean": "helmet paper wagon winter engine hammer valley rabbit feather dragon helmet paper"
+  },
+  {
+   "id": "ind_007",
+   "skill": "induction",
+   "clean": "monkey coffee guitar pencil paper ocean hammer pepper queen planet monkey coffee guitar pencil paper ocean"
+  },
+  {
+   "id": "ind_008",
+   "skill": "induction",
+   "clean": "garden guitar window apple finger temple paper monkey market rabbit garden guitar window apple finger"
+  },
+  {
+   "id": "ind_009",
+   "skill": "induction",
+   "clean": "carpet tunnel orange helmet tiger jacket rabbit pepper cotton engine carpet tunnel orange"
+  },
+  {
+   "id": "ind_010",
+   "skill": "induction",
+   "clean": "apple garden summer pepper desert river chair cotton planet orange apple garden summer pepper"
+  },
+  {
+   "id": "ind_011",
+   "skill": "induction",
+   "clean": "pencil anchor magnet doctor summer butter stone castle lemon paper pencil anchor magnet doctor"
+  },
+  {
+   "id": "ind_012",
+   "skill": "induction",
+   "clean": "bridge bottle cloud horse engine mirror queen orange chair hammer bridge bottle cloud horse engine"
+  },
+  {
+   "id": "ind_013",
+   "skill": "induction",
+   "clean": "finger wagon pencil ocean pepper rocket bridge button apple tunnel finger wagon pencil ocean pepper"
+  },
+  {
+   "id": "ind_014",
+   "skill": "induction",
+   "clean": "wagon engine shadow mirror monkey ocean planet ribbon helmet basket wagon engine"
+  },
+  {
+   "id": "ind_016",
+   "skill": "induction",
+   "clean": "ribbon rabbit orange feather lemon helmet river stone temple pencil ribbon rabbit orange"
+  },
+  {
+   "id": "ind_017",
+   "skill": "induction",
+   "clean": "island orange pocket ribbon market chair summer basket wallet window island orange pocket"
+  },
+  {
+   "id": "ind_018",
+   "skill": "induction",
+   "clean": "jacket hammer cloud summer desert horse letter pencil silver island jacket hammer cloud"
+  },
+  {
+   "id": "ind_019",
+   "skill": "induction",
+   "clean": "river basket feather finger monkey market cloud temple chair queen river basket"
+  },
+  {
+   "id": "ind_020",
+   "skill": "induction",
+   "clean": "queen ribbon desert summer pencil garden castle doctor silver bridge queen ribbon desert summer"
+  },
+  {
+   "id": "ind_021",
+   "skill": "induction",
+   "clean": "shadow forest market chair letter summer ocean hammer dragon finger shadow forest market chair letter"
+  },
+  {
+   "id": "ind_022",
+   "skill": "induction",
+   "clean": "apple winter table doctor horse planet feather island butter summer apple winter"
+  },
+  {
+   "id": "ind_023",
+   "skill": "induction",
+   "clean": "window candle dragon wallet tunnel pocket rabbit doctor temple desert window candle dragon"
+  },
+  {
+   "id": "ind_024",
+   "skill": "induction",
+   "clean": "hammer magnet ladder table cloud horse rocket mirror temple market hammer magnet ladder table"
+  },
+  {
+   "id": "ind_025",
+   "skill": "induction",
+   "clean": "tiger ocean anchor summer forest paper bridge desert pepper guitar tiger ocean anchor summer forest paper"
+  },
+  {
+   "id": "ind_026",
+   "skill": "induction",
+   "clean": "carpet engine queen guitar ocean ribbon shadow castle island rocket carpet engine queen guitar ocean ribbon"
+  },
+  {
+   "id": "ind_027",
+   "skill": "induction",
+   "clean": "stone orange tiger candle rabbit shadow temple hammer basket wagon stone orange"
+  },
+  {
+   "id": "ind_028",
+   "skill": "induction",
+   "clean": "forest wallet ribbon carpet bridge feather butter cloud bottle planet forest wallet ribbon carpet"
+  },
+  {
+   "id": "ind_029",
+   "skill": "induction",
+   "clean": "table shadow mirror valley cloud feather desert window garden orange table shadow"
+  },
+  {
+   "id": "ind_030",
+   "skill": "induction",
+   "clean": "castle cloud feather winter desert jacket finger pepper ribbon bridge castle cloud feather winter"
+  },
+  {
+   "id": "ind_031",
+   "skill": "induction",
+   "clean": "winter rocket pencil butter castle guitar ocean coffee forest jacket winter rocket"
+  },
+  {
+   "id": "ind_032",
+   "skill": "induction",
+   "clean": "letter guitar winter pepper stone tunnel bridge dragon rocket river letter guitar winter pepper stone"
+  },
+  {
+   "id": "ind_033",
+   "skill": "induction",
+   "clean": "cotton temple wagon wallet jacket button doctor bottle dragon monkey cotton temple"
+  },
+  {
+   "id": "ind_034",
+   "skill": "induction",
+   "clean": "coffee ocean carpet hammer bridge finger guitar pocket butter valley coffee ocean carpet"
+  },
+  {
+   "id": "ind_035",
+   "skill": "induction",
+   "clean": "temple chair helmet butter mirror silver forest rocket letter summer temple chair helmet butter"
+  },
+  {
+   "id": "ind_036",
+   "skill": "induction",
+   "clean": "lemon bottle carpet island stone monkey wallet pocket rocket anchor lemon bottle carpet"
+  },
+  {
+   "id": "ind_037",
+   "skill": "induction",
+   "clean": "chair shadow paper pencil ocean silver feather queen island ladder chair shadow paper pencil ocean"
+  },
+  {
+   "id": "ind_038",
+   "skill": "induction",
+   "clean": "table forest silver bridge ribbon feather coffee mirror cloud island table forest silver"
+  },
+  {
+   "id": "ind_039",
+   "skill": "induction",
+   "clean": "bridge tunnel button summer queen forest chair winter desert planet bridge tunnel button summer queen"
+  },
+  {
+   "id": "ind_040",
+   "skill": "induction",
+   "clean": "silver pepper basket temple orange planet feather lemon table paper silver pepper basket temple"
+  },
+  {
+   "id": "ind_041",
+   "skill": "induction",
+   "clean": "jacket silver cloud river hammer feather mirror horse rocket shadow jacket silver cloud river hammer feather"
+  },
+  {
+   "id": "ind_042",
+   "skill": "induction",
+   "clean": "ribbon helmet pocket planet castle hammer desert valley orange ocean ribbon helmet pocket planet castle hammer"
+  },
+  {
+   "id": "ind_043",
+   "skill": "induction",
+   "clean": "river bridge pepper hammer tiger planet ladder candle cotton bottle river bridge pepper hammer tiger"
+  },
+  {
+   "id": "ind_044",
+   "skill": "induction",
+   "clean": "valley basket apple stone coffee pepper candle letter orange wallet valley basket"
+  },
+  {
+   "id": "ind_045",
+   "skill": "induction",
+   "clean": "market guitar shadow helmet summer pocket ribbon temple horse rocket market guitar shadow helmet summer pocket"
+  },
+  {
+   "id": "ind_046",
+   "skill": "induction",
+   "clean": "stone river winter butter letter pepper table engine cotton silver stone river winter butter"
+  },
+  {
+   "id": "ind_047",
+   "skill": "induction",
+   "clean": "candle ribbon magnet orange carpet monkey guitar bridge wallet river candle ribbon magnet orange"
+  },
+  {
+   "id": "ind_048",
+   "skill": "induction",
+   "clean": "monkey guitar cotton planet wallet ladder feather orange rabbit basket monkey guitar cotton planet"
+  },
+  {
+   "id": "ind_049",
+   "skill": "induction",
+   "clean": "stone wagon desert castle shadow engine lemon rocket valley candle stone wagon desert castle shadow"
+  },
+  {
+   "id": "ind_050",
+   "skill": "induction",
+   "clean": "letter temple table ladder wallet shadow queen forest garden bridge letter temple table ladder"
+  },
+  {
+   "id": "ind_051",
+   "skill": "induction",
+   "clean": "coffee wagon carpet feather stone forest guitar cloud pepper cotton coffee wagon carpet feather stone forest"
+  },
+  {
+   "id": "ind_052",
+   "skill": "induction",
+   "clean": "ocean candle pepper river paper ribbon carpet doctor tiger market ocean candle pepper river paper"
+  },
+  {
+   "id": "ind_053",
+   "skill": "induction",
+   "clean": "river window helmet rocket anchor doctor guitar monkey shadow island river window helmet rocket anchor doctor"
+  },
+  {
+   "id": "ind_054",
+   "skill": "induction",
+   "clean": "anchor tunnel hammer finger doctor engine mirror carpet bottle rocket anchor tunnel"
+  },
+  {
+   "id": "ind_055",
+   "skill": "induction",
+   "clean": "stone rocket paper butter bottle shadow guitar wagon dragon window stone rocket"
+  },
+  {
+   "id": "ind_056",
+   "skill": "induction",
+   "clean": "jacket castle horse engine island hammer anchor bridge table chair jacket castle horse"
+  },
+  {
+   "id": "ind_057",
+   "skill": "induction",
+   "clean": "desert basket valley guitar butter wallet rocket pocket cotton engine desert basket valley guitar"
+  },
+  {
+   "id": "ind_058",
+   "skill": "induction",
+   "clean": "ribbon garden valley window engine tunnel monkey table river bridge ribbon garden valley"
+  },
+  {
+   "id": "ind_059",
+   "skill": "induction",
+   "clean": "temple queen mirror candle tiger valley desert forest garden shadow temple queen mirror candle tiger"
+  },
+  {
+   "id": "ind_060",
+   "skill": "induction",
+   "clean": "ocean planet basket engine finger tunnel winter anchor magnet tiger ocean planet"
+  },
+  {
+   "id": "ioi_009",
+   "skill": "indirect_object",
+   "clean": "Then, Maria and Lisa had a long argument at the park. Afterwards, Lisa said to"
+  },
+  {
+   "id": "ioi_014",
+   "skill": "indirect_object",
+   "clean": "When Bob and John went to the school, Bob gave a kiss to"
+  },
+  {
+   "id": "ioi_017",
+   "skill": "indirect_object",
+   "clean": "Ram and Alice found a drink at the office. Alice gave it to"
+  },
+  {
+   "id": "ioi_018",
+   "skill": "indirect_object",
+   "clean": "After Omar and Nina went to the garden, Omar gave a basket to"
+  },
+  {
+   "id": "ioi_019",
+   "skill": "indirect_object",
+   "clean": "Laura and Hiro found a bone at the station. Laura gave it to"
+  },
+  {
+   "id": "ioi_020",
+   "skill": "indirect_object",
+   "clean": "When Ivan and Daniel went to the garden, Daniel gave a letter to"
+  },
+  {
+   "id": "ioi_022",
+   "skill": "indirect_object",
+   "clean": "While Alice and Sarah were working at the restaurant, Sarah gave a drink to"
+  },
+  {
+   "id": "ioi_024",
+   "skill": "indirect_object",
+   "clean": "Mei and Mary found a necklace at the station. Mei gave it to"
+  },
+  {
+   "id": "ioi_025",
+   "skill": "indirect_object",
+   "clean": "After Ram and Wei went to the garden, Ram gave a drink to"
+  },
+  {
+   "id": "ioi_029",
+   "skill": "indirect_object",
+   "clean": "Then, Kate and Tom had a long argument at the beach. Afterwards, Tom said to"
+  },
+  {
+   "id": "ioi_032",
+   "skill": "indirect_object",
+   "clean": "Then, David and Nina had a long argument at the hospital. Afterwards, Nina said to"
+  },
+  {
+   "id": "ioi_035",
+   "skill": "indirect_object",
+   "clean": "While Anna and Tom were working at the hospital, Tom gave a necklace to"
+  },
+  {
+   "id": "ioi_038",
+   "skill": "indirect_object",
+   "clean": "Then, Bob and Ram had a long argument at the hospital. Afterwards, Ram said to"
+  },
+  {
+   "id": "ioi_039",
+   "skill": "indirect_object",
+   "clean": "After Nina and Michael went to the park, Michael gave a letter to"
+  },
+  {
+   "id": "ioi_041",
+   "skill": "indirect_object",
+   "clean": "Lisa and Raj found a snack at the store. Lisa gave it to"
+  },
+  {
+   "id": "ioi_042",
+   "skill": "indirect_object",
+   "clean": "Then, Mei and Wei had a long argument at the hospital. Afterwards, Wei said to"
+  },
+  {
+   "id": "ioi_048",
+   "skill": "indirect_object",
+   "clean": "After Nina and James went to the garden, Nina gave a basket to"
+  },
+  {
+   "id": "ioi_051",
+   "skill": "indirect_object",
+   "clean": "After Rahul and Lisa went to the store, Rahul gave a bone to"
+  },
+  {
+   "id": "ioi_053",
+   "skill": "indirect_object",
+   "clean": "After Wei and Ahmed went to the station, Ahmed gave a book to"
+  },
+  {
+   "id": "ioi_056",
+   "skill": "indirect_object",
+   "clean": "When Ram and Emma went to the office, Emma gave a book to"
+  },
+  {
+   "id": "ioi_057",
+   "skill": "indirect_object",
+   "clean": "Then, James and Raj had a long argument at the station. Afterwards, Raj said to"
+  },
+  {
+   "id": "ioi_064",
+   "skill": "indirect_object",
+   "clean": "Daniel and Emma found a ring at the office. Daniel gave it to"
+  },
+  {
+   "id": "ioi_071",
+   "skill": "indirect_object",
+   "clean": "When Michael and John went to the store, John gave a computer to"
+  },
+  {
+   "id": "ioi_072",
+   "skill": "indirect_object",
+   "clean": "Ivan and Alice found a letter at the station. Ivan gave it to"
+  },
+  {
+   "id": "ioi_073",
+   "skill": "indirect_object",
+   "clean": "When Mary and James went to the library, Mary gave a snack to"
+  },
+  {
+   "id": "ioi_074",
+   "skill": "indirect_object",
+   "clean": "After David and James went to the restaurant, David gave a book to"
+  },
+  {
+   "id": "ioi_078",
+   "skill": "indirect_object",
+   "clean": "James and Sarah found a letter at the station. Sarah gave it to"
+  },
+  {
+   "id": "ioi_082",
+   "skill": "indirect_object",
+   "clean": "Ram and Lisa found a necklace at the beach. Ram gave it to"
+  },
+  {
+   "id": "ioi_083",
+   "skill": "indirect_object",
+   "clean": "While Alice and Tom were working at the hospital, Tom gave a basket to"
+  },
+  {
+   "id": "ioi_085",
+   "skill": "indirect_object",
+   "clean": "After Lisa and Carlos went to the garden, Lisa gave a letter to"
+  },
+  {
+   "id": "ioi_086",
+   "skill": "indirect_object",
+   "clean": "Then, Ram and Kate had a long argument at the station. Afterwards, Ram said to"
+  },
+  {
+   "id": "ioi_087",
+   "skill": "indirect_object",
+   "clean": "When Alice and Kate went to the office, Alice gave a bone to"
+  },
+  {
+   "id": "ioi_088",
+   "skill": "indirect_object",
+   "clean": "Then, Mary and Carlos had a long argument at the hospital. Afterwards, Carlos said to"
+  },
+  {
+   "id": "ioi_090",
+   "skill": "indirect_object",
+   "clean": "After Sarah and John went to the garden, John gave a ring to"
+  },
+  {
+   "id": "ioi_091",
+   "skill": "indirect_object",
+   "clean": "Tom and Laura found a bone at the station. Laura gave it to"
+  },
+  {
+   "id": "ioi_092",
+   "skill": "indirect_object",
+   "clean": "While Ahmed and Bob were working at the school, Bob gave a snack to"
+  },
+  {
+   "id": "ioi_093",
+   "skill": "indirect_object",
+   "clean": "After Nina and Omar went to the hospital, Omar gave a necklace to"
+  },
+  {
+   "id": "ioi_095",
+   "skill": "indirect_object",
+   "clean": "After Mei and Ivan went to the school, Mei gave a basket to"
+  },
+  {
+   "id": "ioi_099",
+   "skill": "indirect_object",
+   "clean": "While John and Ram were working at the hospital, Ram gave a basket to"
+  },
+  {
+   "id": "ioi_103",
+   "skill": "indirect_object",
+   "clean": "Maria and Ivan found a book at the park. Maria gave it to"
+  },
+  {
+   "id": "ioi_105",
+   "skill": "indirect_object",
+   "clean": "Then, James and Nina had a long argument at the beach. Afterwards, James said to"
+  },
+  {
+   "id": "ioi_107",
+   "skill": "indirect_object",
+   "clean": "While Hiro and Anna were working at the store, Hiro gave a necklace to"
+  },
+  {
+   "id": "ioi_114",
+   "skill": "indirect_object",
+   "clean": "While Michael and Daniel were working at the park, Michael gave a letter to"
+  },
+  {
+   "id": "ioi_115",
+   "skill": "indirect_object",
+   "clean": "Tom and Bob found a letter at the hospital. Bob gave it to"
+  },
+  {
+   "id": "ioi_117",
+   "skill": "indirect_object",
+   "clean": "After Rahul and Emma went to the library, Rahul gave a book to"
+  },
+  {
+   "id": "ioi_121",
+   "skill": "indirect_object",
+   "clean": "Tom and Hiro found a book at the hospital. Tom gave it to"
+  },
+  {
+   "id": "ioi_122",
+   "skill": "indirect_object",
+   "clean": "After Rahul and Emma went to the store, Emma gave a basket to"
+  },
+  {
+   "id": "ioi_123",
+   "skill": "indirect_object",
+   "clean": "After Hiro and Ahmed went to the school, Ahmed gave a ring to"
+  },
+  {
+   "id": "ioi_124",
+   "skill": "indirect_object",
+   "clean": "While Ahmed and Lisa were working at the park, Lisa gave a kiss to"
+  },
+  {
+   "id": "ioi_125",
+   "skill": "indirect_object",
+   "clean": "Then, Tom and Daniel had a long argument at the school. Afterwards, Daniel said to"
+  },
+  {
+   "id": "ioi_126",
+   "skill": "indirect_object",
+   "clean": "When David and Ahmed went to the office, Ahmed gave a drink to"
+  },
+  {
+   "id": "ioi_128",
+   "skill": "indirect_object",
+   "clean": "After Lisa and Hiro went to the park, Hiro gave a drink to"
+  },
+  {
+   "id": "ioi_129",
+   "skill": "indirect_object",
+   "clean": "After Mark and Ram went to the garden, Mark gave a necklace to"
+  },
+  {
+   "id": "ioi_135",
+   "skill": "indirect_object",
+   "clean": "When Maria and Tom went to the garden, Tom gave a book to"
+  },
+  {
+   "id": "ioi_137",
+   "skill": "indirect_object",
+   "clean": "When Daniel and Mei went to the hospital, Mei gave a drink to"
+  },
+  {
+   "id": "ioi_145",
+   "skill": "indirect_object",
+   "clean": "While Lisa and Carlos were working at the office, Carlos gave a book to"
+  },
+  {
+   "id": "ioi_147",
+   "skill": "indirect_object",
+   "clean": "Then, Omar and James had a long argument at the library. Afterwards, James said to"
+  },
+  {
+   "id": "ioi_148",
+   "skill": "indirect_object",
+   "clean": "Anna and Ram found a ring at the school. Ram gave it to"
+  },
+  {
+   "id": "ioi_149",
+   "skill": "indirect_object",
+   "clean": "While Carlos and Wei were working at the school, Wei gave a book to"
+  },
+  {
+   "id": "ioi_151",
+   "skill": "indirect_object",
+   "clean": "Then, Mei and Bob had a long argument at the restaurant. Afterwards, Bob said to"
+  },
+  {
+   "id": "ioi_152",
+   "skill": "indirect_object",
+   "clean": "When Mark and Tom went to the station, Mark gave a computer to"
+  },
+  {
+   "id": "ioi_156",
+   "skill": "indirect_object",
+   "clean": "Raj and Michael found a ring at the store. Raj gave it to"
+  },
+  {
+   "id": "ioi_157",
+   "skill": "indirect_object",
+   "clean": "After Michael and Lisa went to the store, Lisa gave a basket to"
+  },
+  {
+   "id": "ioi_158",
+   "skill": "indirect_object",
+   "clean": "Then, Mary and Bob had a long argument at the restaurant. Afterwards, Mary said to"
+  },
+  {
+   "id": "ioi_159",
+   "skill": "indirect_object",
+   "clean": "After Raj and Anna went to the store, Raj gave a bone to"
+  },
+  {
+   "id": "gt_001",
+   "skill": "greater_than",
+   "clean": "The occupation lasted from the year 1777 to the year 17"
+  },
+  {
+   "id": "gt_002",
+   "skill": "greater_than",
+   "clean": "The campaign lasted from the year 1792 to the year 17"
+  },
+  {
+   "id": "gt_003",
+   "skill": "greater_than",
+   "clean": "The journey lasted from the year 1731 to the year 17"
+  },
+  {
+   "id": "gt_004",
+   "skill": "greater_than",
+   "clean": "The occupation lasted from the year 1736 to the year 17"
+  },
+  {
+   "id": "gt_005",
+   "skill": "greater_than",
+   "clean": "The journey lasted from the year 1734 to the year 17"
+  },
+  {
+   "id": "gt_006",
+   "skill": "greater_than",
+   "clean": "The occupation lasted from the year 1771 to the year 17"
+  },
+  {
+   "id": "gt_007",
+   "skill": "greater_than",
+   "clean": "The construction lasted from the year 1781 to the year 17"
+  },
+  {
+   "id": "gt_008",
+   "skill": "greater_than",
+   "clean": "The war lasted from the year 1712 to the year 17"
+  },
+  {
+   "id": "gt_009",
+   "skill": "greater_than",
+   "clean": "The war lasted from the year 1743 to the year 17"
+  },
+  {
+   "id": "gt_010",
+   "skill": "greater_than",
+   "clean": "The siege lasted from the year 1718 to the year 17"
+  },
+  {
+   "id": "gt_011",
+   "skill": "greater_than",
+   "clean": "The occupation lasted from the year 1727 to the year 17"
+  },
+  {
+   "id": "gt_012",
+   "skill": "greater_than",
+   "clean": "The occupation lasted from the year 1756 to the year 17"
+  },
+  {
+   "id": "gt_013",
+   "skill": "greater_than",
+   "clean": "The project lasted from the year 1788 to the year 17"
+  },
+  {
+   "id": "gt_015",
+   "skill": "greater_than",
+   "clean": "The expedition lasted from the year 1797 to the year 17"
+  },
+  {
+   "id": "gt_016",
+   "skill": "greater_than",
+   "clean": "The voyage lasted from the year 1706 to the year 17"
+  },
+  {
+   "id": "gt_017",
+   "skill": "greater_than",
+   "clean": "The journey lasted from the year 1787 to the year 17"
+  },
+  {
+   "id": "gt_018",
+   "skill": "greater_than",
+   "clean": "The war lasted from the year 1725 to the year 17"
+  },
+  {
+   "id": "gt_019",
+   "skill": "greater_than",
+   "clean": "The war lasted from the year 1747 to the year 17"
+  },
+  {
+   "id": "gt_020",
+   "skill": "greater_than",
+   "clean": "The rebellion lasted from the year 1724 to the year 17"
+  },
+  {
+   "id": "gt_021",
+   "skill": "greater_than",
+   "clean": "The siege lasted from the year 1726 to the year 17"
+  },
+  {
+   "id": "gt_022",
+   "skill": "greater_than",
+   "clean": "The campaign lasted from the year 1744 to the year 17"
+  },
+  {
+   "id": "gt_023",
+   "skill": "greater_than",
+   "clean": "The occupation lasted from the year 1774 to the year 17"
+  },
+  {
+   "id": "gt_024",
+   "skill": "greater_than",
+   "clean": "The campaign lasted from the year 1780 to the year 17"
+  },
+  {
+   "id": "gt_025",
+   "skill": "greater_than",
+   "clean": "The drought lasted from the year 1769 to the year 17"
+  },
+  {
+   "id": "gt_026",
+   "skill": "greater_than",
+   "clean": "The expedition lasted from the year 1796 to the year 17"
+  },
+  {
+   "id": "gt_027",
+   "skill": "greater_than",
+   "clean": "The occupation lasted from the year 1783 to the year 17"
+  },
+  {
+   "id": "gt_028",
+   "skill": "greater_than",
+   "clean": "The construction lasted from the year 1728 to the year 17"
+  },
+  {
+   "id": "gt_029",
+   "skill": "greater_than",
+   "clean": "The project lasted from the year 1762 to the year 17"
+  },
+  {
+   "id": "gt_030",
+   "skill": "greater_than",
+   "clean": "The expedition lasted from the year 1782 to the year 17"
+  },
+  {
+   "id": "gt_031",
+   "skill": "greater_than",
+   "clean": "The occupation lasted from the year 1779 to the year 17"
+  },
+  {
+   "id": "gt_032",
+   "skill": "greater_than",
+   "clean": "The drought lasted from the year 1785 to the year 17"
+  },
+  {
+   "id": "gt_033",
+   "skill": "greater_than",
+   "clean": "The rebellion lasted from the year 1722 to the year 17"
+  },
+  {
+   "id": "gt_034",
+   "skill": "greater_than",
+   "clean": "The war lasted from the year 1765 to the year 17"
+  },
+  {
+   "id": "gt_035",
+   "skill": "greater_than",
+   "clean": "The journey lasted from the year 1793 to the year 17"
+  },
+  {
+   "id": "gt_037",
+   "skill": "greater_than",
+   "clean": "The occupation lasted from the year 1713 to the year 17"
+  },
+  {
+   "id": "gt_038",
+   "skill": "greater_than",
+   "clean": "The famine lasted from the year 1733 to the year 17"
+  },
+  {
+   "id": "gt_039",
+   "skill": "greater_than",
+   "clean": "The construction lasted from the year 1710 to the year 17"
+  },
+  {
+   "id": "gt_040",
+   "skill": "greater_than",
+   "clean": "The rebellion lasted from the year 1768 to the year 17"
+  },
+  {
+   "id": "gt_041",
+   "skill": "greater_than",
+   "clean": "The drought lasted from the year 1741 to the year 17"
+  },
+  {
+   "id": "gt_042",
+   "skill": "greater_than",
+   "clean": "The famine lasted from the year 1778 to the year 17"
+  },
+  {
+   "id": "gt_043",
+   "skill": "greater_than",
+   "clean": "The drought lasted from the year 1738 to the year 17"
+  },
+  {
+   "id": "gt_044",
+   "skill": "greater_than",
+   "clean": "The war lasted from the year 1772 to the year 17"
+  },
+  {
+   "id": "gt_045",
+   "skill": "greater_than",
+   "clean": "The project lasted from the year 1754 to the year 17"
+  },
+  {
+   "id": "gt_046",
+   "skill": "greater_than",
+   "clean": "The journey lasted from the year 1763 to the year 17"
+  },
+  {
+   "id": "gt_047",
+   "skill": "greater_than",
+   "clean": "The famine lasted from the year 1789 to the year 17"
+  },
+  {
+   "id": "gt_048",
+   "skill": "greater_than",
+   "clean": "The drought lasted from the year 1767 to the year 17"
+  },
+  {
+   "id": "gt_049",
+   "skill": "greater_than",
+   "clean": "The journey lasted from the year 1729 to the year 17"
+  },
+  {
+   "id": "gt_050",
+   "skill": "greater_than",
+   "clean": "The construction lasted from the year 1784 to the year 17"
+  },
+  {
+   "id": "gt_051",
+   "skill": "greater_than",
+   "clean": "The project lasted from the year 1757 to the year 17"
+  },
+  {
+   "id": "gt_052",
+   "skill": "greater_than",
+   "clean": "The journey lasted from the year 1750 to the year 17"
+  },
+  {
+   "id": "gt_053",
+   "skill": "greater_than",
+   "clean": "The war lasted from the year 1798 to the year 17"
+  },
+  {
+   "id": "gt_054",
+   "skill": "greater_than",
+   "clean": "The famine lasted from the year 1716 to the year 17"
+  },
+  {
+   "id": "gt_055",
+   "skill": "greater_than",
+   "clean": "The rebellion lasted from the year 1758 to the year 17"
+  },
+  {
+   "id": "gt_056",
+   "skill": "greater_than",
+   "clean": "The drought lasted from the year 1742 to the year 17"
+  },
+  {
+   "id": "gt_057",
+   "skill": "greater_than",
+   "clean": "The construction lasted from the year 1752 to the year 17"
+  },
+  {
+   "id": "gt_058",
+   "skill": "greater_than",
+   "clean": "The drought lasted from the year 1708 to the year 17"
+  },
+  {
+   "id": "gt_059",
+   "skill": "greater_than",
+   "clean": "The occupation lasted from the year 1707 to the year 17"
+  },
+  {
+   "id": "gt_060",
+   "skill": "greater_than",
+   "clean": "The construction lasted from the year 1790 to the year 17"
+  },
+  {
+   "id": "fact_007_10",
+   "skill": "fact_recall",
+   "clean": "The Brandenburg Gate is in the city of"
+  },
+  {
+   "id": "fact_016_10",
+   "skill": "fact_recall",
+   "clean": "The Burj Khalifa is in the city of"
+  },
+  {
+   "id": "fact_033_9",
+   "skill": "fact_recall",
+   "clean": "The Brandenburg Gate is located in the city of"
+  },
+  {
+   "id": "fact_043_3",
+   "skill": "fact_recall",
+   "clean": "The Sydney Opera House is located in the city of"
+  },
+  {
+   "id": "fact_044_8",
+   "skill": "fact_recall",
+   "clean": "The CN Tower is located in the city of"
+  },
+  {
+   "id": "fact_053_5",
+   "skill": "fact_recall",
+   "clean": "The capital of France is the city of"
+  },
+  {
+   "id": "fact_055_1",
+   "skill": "fact_recall",
+   "clean": "The capital of Germany is the city of"
+  },
+  {
+   "id": "fact_057_4",
+   "skill": "fact_recall",
+   "clean": "The capital of Japan is the city of"
+  },
+  {
+   "id": "fact_061_1",
+   "skill": "fact_recall",
+   "clean": "The capital of Greece is the city of"
+  },
+  {
+   "id": "fact_062_6",
+   "skill": "fact_recall",
+   "clean": "The capital of Portugal is the city of"
+  },
+  {
+   "id": "fact_064_2",
+   "skill": "fact_recall",
+   "clean": "The capital of Ireland is the city of"
+  },
+  {
+   "id": "fact_065_2",
+   "skill": "fact_recall",
+   "clean": "The capital of Poland is the city of"
+  },
+  {
+   "id": "fact_066_2",
+   "skill": "fact_recall",
+   "clean": "The capital of Hungary is the city of"
+  },
+  {
+   "id": "fact_067_11",
+   "skill": "fact_recall",
+   "clean": "The capital of Norway is the city of"
+  },
+  {
+   "id": "fact_068_5",
+   "skill": "fact_recall",
+   "clean": "The capital of Sweden is the city of"
+  },
+  {
+   "id": "fact_069_2",
+   "skill": "fact_recall",
+   "clean": "The capital of Denmark is the city of"
+  },
+  {
+   "id": "fact_070_11",
+   "skill": "fact_recall",
+   "clean": "The capital of Finland is the city of"
+  },
+  {
+   "id": "fact_072_1",
+   "skill": "fact_recall",
+   "clean": "The capital of Peru is the city of"
+  },
+  {
+   "id": "fact_073_2",
+   "skill": "fact_recall",
+   "clean": "The capital of Cuba is the city of"
+  },
+  {
+   "id": "fact_081_2",
+   "skill": "fact_recall",
+   "clean": "The capital of Indonesia is the city of"
+  },
+  {
+   "id": "fact_083_1",
+   "skill": "fact_recall",
+   "clean": "The capital of Netherlands is the city of"
+  },
+  {
+   "id": "fact_095_11",
+   "skill": "fact_recall",
+   "clean": "The capital of Scotland is the city of"
+  },
+  {
+   "id": "fact_096_2",
+   "skill": "fact_recall",
+   "clean": "The capital of Wales is the city of"
+  },
+  {
+   "id": "fact_097_8",
+   "skill": "fact_recall",
+   "clean": "The capital of England is the city of"
+  },
+  {
+   "id": "fact_110_3",
+   "skill": "fact_recall",
+   "clean": "The capital of Lebanon is the city of"
+  },
+  {
+   "id": "fact_117_8",
+   "skill": "fact_recall",
+   "clean": "The capital of Philippines is the city of"
+  },
+  {
+   "id": "fact_124_2",
+   "skill": "fact_recall",
+   "clean": "The capital of Chile is the city of"
+  },
+  {
+   "id": "sva_001",
+   "skill": "agreement",
+   "clean": "Everyone knows that the keys near the house"
+  },
+  {
+   "id": "sva_003",
+   "skill": "agreement",
+   "clean": "Everyone knows that the teachers to the table"
+  },
+  {
+   "id": "sva_004",
+   "skill": "agreement",
+   "clean": "I think that the pictures to the window"
+  },
+  {
+   "id": "sva_006",
+   "skill": "agreement",
+   "clean": "I think that the teacher behind the cabinets"
+  },
+  {
+   "id": "sva_007",
+   "skill": "agreement",
+   "clean": "I think that the key to the tables"
+  },
+  {
+   "id": "sva_009",
+   "skill": "agreement",
+   "clean": "I think that the keys near the table"
+  },
+  {
+   "id": "sva_010",
+   "skill": "agreement",
+   "clean": "Everyone knows that the door behind the tables"
+  },
+  {
+   "id": "sva_011",
+   "skill": "agreement",
+   "clean": "I think that the door behind the houses"
+  },
+  {
+   "id": "sva_012",
+   "skill": "agreement",
+   "clean": "Everyone knows that the student to the tables"
+  },
+  {
+   "id": "sva_013",
+   "skill": "agreement",
+   "clean": "I think that the car True the houses"
+  },
+  {
+   "id": "sva_014",
+   "skill": "agreement",
+   "clean": "Everyone knows that the pictures near the table"
+  },
+  {
+   "id": "sva_015",
+   "skill": "agreement",
+   "clean": "Everyone knows that the dogs behind the window"
+  },
+  {
+   "id": "sva_018",
+   "skill": "agreement",
+   "clean": "Everyone knows that the doors to the table"
+  },
+  {
+   "id": "sva_019",
+   "skill": "agreement",
+   "clean": "Everyone knows that the cars behind the cabinet"
+  },
+  {
+   "id": "sva_021",
+   "skill": "agreement",
+   "clean": "Everyone knows that the friends near the table"
+  },
+  {
+   "id": "sva_022",
+   "skill": "agreement",
+   "clean": "Everyone knows that the car to the houses"
+  },
+  {
+   "id": "sva_023",
+   "skill": "agreement",
+   "clean": "Everyone knows that the doors to the house"
+  },
+  {
+   "id": "sva_025",
+   "skill": "agreement",
+   "clean": "Everyone knows that the doors near the cabinet"
+  },
+  {
+   "id": "sva_026",
+   "skill": "agreement",
+   "clean": "Everyone knows that the bottles behind the cabinet"
+  },
+  {
+   "id": "sva_028",
+   "skill": "agreement",
+   "clean": "I think that the dogs behind the house"
+  },
+  {
+   "id": "sva_029",
+   "skill": "agreement",
+   "clean": "Everyone knows that the doors behind the cabinet"
+  },
+  {
+   "id": "sva_030",
+   "skill": "agreement",
+   "clean": "Everyone knows that the dogs to the table"
+  },
+  {
+   "id": "sva_031",
+   "skill": "agreement",
+   "clean": "Everyone knows that the books to the cabinet"
+  },
+  {
+   "id": "sva_032",
+   "skill": "agreement",
+   "clean": "Everyone knows that the key near the windows"
+  },
+  {
+   "id": "sva_033",
+   "skill": "agreement",
+   "clean": "I think that the students to the cabinet"
+  },
+  {
+   "id": "sva_034",
+   "skill": "agreement",
+   "clean": "Everyone knows that the dog to the cabinets"
+  },
+  {
+   "id": "sva_035",
+   "skill": "agreement",
+   "clean": "Everyone knows that the dog to the tables"
+  },
+  {
+   "id": "sva_036",
+   "skill": "agreement",
+   "clean": "Everyone knows that the student near the cabinets"
+  },
+  {
+   "id": "sva_037",
+   "skill": "agreement",
+   "clean": "I think that the dogs to the cabinet"
+  },
+  {
+   "id": "sva_039",
+   "skill": "agreement",
+   "clean": "I think that the car near the cabinets"
+  },
+  {
+   "id": "sva_041",
+   "skill": "agreement",
+   "clean": "Everyone knows that the picture behind the houses"
+  },
+  {
+   "id": "sva_046",
+   "skill": "agreement",
+   "clean": "I think that the dog near the windows"
+  },
+  {
+   "id": "sva_047",
+   "skill": "agreement",
+   "clean": "I think that the key near the windows"
+  },
+  {
+   "id": "sva_049",
+   "skill": "agreement",
+   "clean": "I think that the car to the houses"
+  },
+  {
+   "id": "sva_050",
+   "skill": "agreement",
+   "clean": "I think that the book to the tables"
+  },
+  {
+   "id": "sva_051",
+   "skill": "agreement",
+   "clean": "Everyone knows that the door True the windows"
+  },
+  {
+   "id": "sva_053",
+   "skill": "agreement",
+   "clean": "Everyone knows that the key to the tables"
+  },
+  {
+   "id": "sva_054",
+   "skill": "agreement",
+   "clean": "Everyone knows that the books to the window"
+  },
+  {
+   "id": "sva_055",
+   "skill": "agreement",
+   "clean": "Everyone knows that the friends to the table"
+  },
+  {
+   "id": "sva_056",
+   "skill": "agreement",
+   "clean": "Everyone knows that the keys behind the window"
+  },
+  {
+   "id": "sva_058",
+   "skill": "agreement",
+   "clean": "Everyone knows that the friend to the windows"
+  },
+  {
+   "id": "sva_060",
+   "skill": "agreement",
+   "clean": "I think that the bottles behind the cabinet"
+  }
+ ]
+}
